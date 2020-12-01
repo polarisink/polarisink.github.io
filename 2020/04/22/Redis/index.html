@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"polaris.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="已经有mysql等关系型数据库了，为什么还要redis这些呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="狂神之Redis">
+<meta property="og:url" content="http://polaris.ink/2020/04/22/Redis/index.html">
+<meta property="og:site_name" content="北辰的墨水瓶">
+<meta property="og:description" content="已经有mysql等关系型数据库了，为什么还要redis这些呢？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-14T06:25:57.254Z">
+<meta property="article:author" content="北辰">
+<meta property="article:tag" content="Redis 缓存">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://polaris.ink/2020/04/22/Redis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>狂神之Redis | 北辰的墨水瓶</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">北辰的墨水瓶</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">青松小筑</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">22</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">23</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://polaris.ink/2020/04/22/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="北辰">
+      <meta itemprop="description" content="未来可期">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="北辰的墨水瓶">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          狂神之Redis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-22 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-22T00:00:00+08:00">2020-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-14 14:25:57" itemprop="dateModified" datetime="2020-10-14T14:25:57+08:00">2020-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>已经有mysql等关系型数据库了，为什么还要redis这些呢？</p>
+<a id="more"></a>
+
+<h1 id="一、NoSql概述"><a href="#一、NoSql概述" class="headerlink" title="一、NoSql概述"></a>一、NoSql概述</h1><h2 id="1、为什么要使用NoSql"><a href="#1、为什么要使用NoSql" class="headerlink" title="1、为什么要使用NoSql"></a>1、为什么要使用NoSql</h2><h3 id="1、单机Mysql"><a href="#1、单机Mysql" class="headerlink" title="1、单机Mysql"></a>1、单机Mysql</h3><ul>
+<li>瓶颈：<ul>
+<li>数据量太大，一个机器放不下</li>
+<li>数据索引，机器内存不够</li>
+<li>访问量（混合读写），一个机器承受不了</li>
+</ul>
+</li>
+</ul>
+<h3 id="2、MemCached-MySql-垂直拆分-读写分离"><a href="#2、MemCached-MySql-垂直拆分-读写分离" class="headerlink" title="2、MemCached + MySql + 垂直拆分(读写分离)"></a>2、MemCached + MySql + 垂直拆分(读写分离)</h3><ul>
+<li>网站大部分都是读操作，每次都查询数据库就很麻烦，使用缓存保持效率</li>
+<li>发展过程：优化数据结构和索引 –&gt; 文件缓存(IO) –&gt; Memcached（当时最流行）</li>
+</ul>
+<h3 id="3、分库分表-水平拆分-Mysql集群"><a href="#3、分库分表-水平拆分-Mysql集群" class="headerlink" title="3、分库分表 + 水平拆分(Mysql集群)"></a>3、分库分表 + 水平拆分(Mysql集群)</h3><ul>
+<li>技术和业务发展的同时，对人的要求越来越高<blockquote>
+<p>本质：数据库（读&amp;写）</p>
+</blockquote>
+</li>
+<li>MylSAM：表锁，十分影响效率，高并发下出现严重问题</li>
+<li>InnoDB：行锁</li>
+<li>慢慢的用分库分表减轻写的压力，但mysql推出的表分区没有被大规模使用</li>
+</ul>
+<h3 id="4、为什么要NoSql"><a href="#4、为什么要NoSql" class="headerlink" title="4、为什么要NoSql"></a>4、为什么要NoSql</h3><ul>
+<li><p>用户个人信息，社交网络，地理位置，用户日志</p>
+</li>
+<li><p>数据多种多样：定位，音乐，热榜，图片</p>
+</li>
+<li><p>NoSql可以很好的处理以上情况：</p>
+<p>不需要固定格式去存储这些，不需要太多操作去横向扩展</p>
+</li>
+</ul>
+<h2 id="2、什么是NoSql"><a href="#2、什么是NoSql" class="headerlink" title="2、什么是NoSql"></a>2、什么是NoSql</h2><blockquote>
+<p>NoSql = Not Only Sql，泛指非关系型数据库</p>
+<p>非关系型数据库：</p>
+</blockquote>
+<blockquote>
+<p>NoSql特点：</p>
+</blockquote>
+<p>解耦</p>
+<p>1、方便扩展，数据之间没有关系，很好扩展</p>
+<p>2、大数据量高性能（redis一秒写8w次，读11w次，NoSql的缓存记录级，是一种细粒度的缓存，性能比较高）</p>
+<p>3、数据类型多样，不需要实现设计数据库，随取随用</p>
+<p>4、传统RDBMS和NoSql区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">传统RDBMS</span><br><span class="line">- 结构化组织</span><br><span class="line">- SQL</span><br><span class="line">- 数据和关系存储在单独的表中</span><br><span class="line">- 操作，数据定义语言</span><br><span class="line"></span><br><span class="line">NoSql</span><br><span class="line">- 不仅仅是数据</span><br><span class="line">- 没有固定的查询语言</span><br><span class="line">- 简直对存储，列存储，文档存储，徒刑数据库</span><br><span class="line">- 最终一致性</span><br><span class="line">- CAP定力和BASE理论（异地多活），初级架构师</span><br><span class="line">- 高性能，高可用，高可扩展性</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>了解：3V + 3高</p>
+<p>3V：海量Volume，多样Variety，实时Velocity</p>
+<p>3高：高并发，高可扩，高性能</p>
+</blockquote>
+<p>真正在公司中的实践：NoSql与RDBMS结合使用最强大</p>
+<h2 id="3、阿里巴巴演进分析"><a href="#3、阿里巴巴演进分析" class="headerlink" title="3、阿里巴巴演进分析"></a>3、阿里巴巴演进分析</h2><p>敏捷开发，极限编程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1、商品基本信息</span></span><br><span class="line">名称、价格、商家信息</span><br><span class="line">关系型数据库解决这些问题：Mysql/Oracle</span><br><span class="line"><span class="comment"># 2、商品的描述，评论（文字较多）</span></span><br><span class="line">文档类型数据库，MangoDB</span><br><span class="line"><span class="comment"># 3、图片</span></span><br><span class="line">分布式文件系统 FastDFS</span><br><span class="line">- 淘宝自己的TFS</span><br><span class="line">- Google的GFS</span><br><span class="line">- Hadoop的HDFS</span><br><span class="line">- 阿里云的OSS</span><br><span class="line"><span class="comment"># 4、商品的关键字(搜索)</span></span><br><span class="line">- 搜索引擎 solr  elasticsearch</span><br><span class="line">- 淘宝 ISearch：多隆</span><br><span class="line"><span class="comment"># 5、商品的热门波段信息</span></span><br><span class="line">- 内存数据库</span><br><span class="line">- Redis、Tair、Memcache</span><br><span class="line"><span class="comment"># 6、商品的交易，外部支付接口</span></span><br><span class="line">- 三方应用</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>大型互联网公司应用问题</p>
+<ul>
+<li>数据问题太多</li>
+<li>数据源繁多，经常重构</li>
+<li>数据改造，大面积改造</li>
+</ul>
+</li>
+<li><p>解决方案：统一的数据服务层UDSL</p>
+</li>
+</ul>
+<h2 id="4、NoSql四大分类"><a href="#4、NoSql四大分类" class="headerlink" title="4、NoSql四大分类"></a>4、NoSql四大分类</h2><h3 id="1、KV键值对"><a href="#1、KV键值对" class="headerlink" title="1、KV键值对"></a>1、KV键值对</h3><h3 id="2、文档类型数据库"><a href="#2、文档类型数据库" class="headerlink" title="2、文档类型数据库"></a>2、文档类型数据库</h3><ul>
+<li>MongoDB<ul>
+<li>一个基于分布式文件存储的数据库，C++编写，用来处理大量的文档</li>
+<li>介于关系型和非关系型数据库之间，非关系型数据库功能最丰富，最像关系型数据库的</li>
+</ul>
+</li>
+</ul>
+<h3 id="3、列存储数据库"><a href="#3、列存储数据库" class="headerlink" title="3、列存储数据库"></a>3、列存储数据库</h3><ul>
+<li>HBase</li>
+<li>分布式文件系统</li>
+</ul>
+<h3 id="4、图关系数据库"><a href="#4、图关系数据库" class="headerlink" title="4、图关系数据库"></a>4、图关系数据库</h3><h1 id="二、Redis入门"><a href="#二、Redis入门" class="headerlink" title="二、Redis入门"></a>二、Redis入门</h1><blockquote>
+<p>Redis是什么？</p>
+</blockquote>
+<p>Redis (Remote Dictionary Server)，远程字典服务</p>
+<p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#strings">字符串（strings）</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#hashes">散列（hashes）</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#lists">列表（lists）</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#sets">集合（sets）</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#sorted-sets">有序集合（sorted sets）</a> 与范围查询， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#bitmaps">bitmaps</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/data-types-intro.html#hyperloglogs">hyperloglogs</a> 和 <a target="_blank" rel="noopener" href="http://www.redis.cn/commands/geoadd.html">地理空间（geospatial）</a> 索引半径查询。 Redis 内置了 <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/replication.html">复制（replication）</a>，<a target="_blank" rel="noopener" href="http://www.redis.cn/commands/eval.html">LUA脚本（Lua scripting）</a>， <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/lru-cache.html">LRU驱动事件（LRU eviction）</a>，<a target="_blank" rel="noopener" href="http://www.redis.cn/topics/transactions.html">事务（transactions）</a> 和不同级别的 <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/persistence.html">磁盘持久化（persistence）</a>， 并通过 <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/sentinel.html">Redis哨兵（Sentinel）</a>和自动 <a target="_blank" rel="noopener" href="http://www.redis.cn/topics/cluster-tutorial.html">分区（Cluster）</a>提供高可用性（high availability）。</p>
+<p><a target="_blank" rel="noopener" href="http://www.redis.cn/commands.html">查看Redis命令大全 →</a></p>
+<blockquote>
+<p>Redis能做什么？</p>
+</blockquote>
+<p>1、内存存储，持久化，内存断电即失，持久化很重要（rdb，aof）</p>
+<p>2、效率高，可用于高速缓存</p>
+<p>3、发布订阅系统</p>
+<p>4、地图信息分布</p>
+<p>5、计时器，计数器</p>
+<blockquote>
+<p>Redis特性</p>
+</blockquote>
+<p>1、多样的数据类型</p>
+<p>2、持久化</p>
+<p>3、集群</p>
+<p>4、事务</p>
+<blockquote>
+<p>Redis安装步骤</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/BigBingtang/article/details/83001102?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param">安装步骤</a></p>
+<h2 id="1、基本使用"><a href="#1、基本使用" class="headerlink" title="1、基本使用"></a>1、基本使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">redis-server # 启动服务</span><br><span class="line">redis-benchmark # 测试速度</span><br><span class="line">redis-cli -p portName # 指定端口启动客户端</span><br><span class="line">ps -ef|grep redis #查看redis进程状态</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 之后在客户端内操作</span></span><br><span class="line">auth xxx #输入设置的密码</span><br><span class="line">ping # 测试连接，成功结果为PONG</span><br><span class="line">shutdown # 退出连接</span><br><span class="line">exit # 退出</span><br><span class="line"></span><br><span class="line">set name lqs #设置值</span><br><span class="line">get name # 获取值</span><br><span class="line">keys * # 获取所有键</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>压力测试参数</li>
+</ul>
+<h2 id="2、基础知识"><a href="#2、基础知识" class="headerlink" title="2、基础知识"></a>2、基础知识</h2><ul>
+<li>默认有16个数据库，默认使用第0个数据库 </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 2 #切换数据库</span><br><span class="line">127.0.0.1:6379[2]&gt; DBSIZE #查看数据库大小</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; flushall # 清空全部</span><br><span class="line">127.0.0.1:6379&gt; flushdb # 清空数据库</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>常见Bug及解决</p>
+<p>1、MISCONF Redis is configured to save RDB snapshots, but it is currently not a</p>
+<ul>
+<li>config stop-writes-on-bgsave-error no （临时解决）</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014071875/article/details/103715183">最好的办法</a></li>
+</ul>
+</blockquote>
+<h1 id="三、五大数据类型"><a href="#三、五大数据类型" class="headerlink" title="三、五大数据类型"></a>三、五大数据类型</h1><h2 id="1、Redis-Key"><a href="#1、Redis-Key" class="headerlink" title="1、Redis-Key"></a>1、Redis-Key</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">exists name <span class="comment"># 查看是否存在</span></span><br><span class="line">move name 1 <span class="comment"># 从数据库1移除name</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; EXPIRE name 10 <span class="comment">#设置过期时间，单位为s</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line">1) <span class="string">&quot;name&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; ttl name <span class="comment">#查看剩余时间</span></span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; ttl name</span><br><span class="line">(<span class="built_in">integer</span>) -2 <span class="comment">#表示已过期</span></span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line">(nil)</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> age 1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">type</span> age <span class="comment">#查看key类型</span></span><br><span class="line">string</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2、String"><a href="#2、String" class="headerlink" title="2、String"></a>2、String</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> age 100</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; APPEND age sui <span class="comment">#追加字符串，不存在则创建</span></span><br><span class="line">(<span class="built_in">integer</span>) 6</span><br><span class="line">127.0.0.1:6379&gt; STRLEN age</span><br><span class="line">(<span class="built_in">integer</span>) 6</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自增自减</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> num 0</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INCR num </span><br><span class="line"><span class="comment">#相当于num++</span></span><br><span class="line"><span class="comment">#如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。</span></span><br><span class="line"><span class="comment">#如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。</span></span><br><span class="line"><span class="comment">#本操作的值限制在 64 位(bit)有符号数字表示之内。</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; get num</span><br><span class="line"><span class="string">&quot;1&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; DECR num <span class="comment">#相当于num--</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; INCRBY num 10 <span class="comment">#设置步长，DECRBY同理</span></span><br><span class="line">(<span class="built_in">integer</span>) 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串截取</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> name 12345678</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; GETRANGE name 1 4 <span class="comment">#字符串截取</span></span><br><span class="line"><span class="string">&quot;2345&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; SETRANGE name 1 lqs <span class="comment">#替换指定位置字符串</span></span><br><span class="line">(<span class="built_in">integer</span>) 8</span><br><span class="line">127.0.0.1:6379&gt; get name</span><br><span class="line"><span class="string">&quot;1lqs5678&quot;</span> <span class="comment">#原来为12345678，234共3个长度替换为lqs</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; SETEX k2 30 lqs <span class="comment">#给k2设置为lqs，时间为30s</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; SETNX mykey 100 <span class="comment">#不存在就设置值，返回1</span></span><br><span class="line"><span class="comment">#在分布式锁中经常使用</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; get mykey</span><br><span class="line"><span class="string">&quot;100&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; SETNX mykey 101 <span class="comment">#存在就不设置，返回0</span></span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; get mykey</span><br><span class="line"><span class="string">&quot;100&quot;</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; mset k1 v1 k2 v2 k3 v3 <span class="comment">#批量创建，原子性操作</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; mget k1 k2 k3 <span class="comment">#批量获取，原子性操作</span></span><br><span class="line">1) <span class="string">&quot;v1&quot;</span></span><br><span class="line">2) <span class="string">&quot;v2&quot;</span></span><br><span class="line">3) <span class="string">&quot;v3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对象</span></span><br><span class="line"><span class="comment">#设置一个user：1对象值为json字符串来保存一个对象</span></span><br><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> user:1 &#123;name:lqs,age:21&#125; </span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get user:1 <span class="comment">#获取user：1</span></span><br><span class="line"><span class="string">&quot;&#123;name:lqs,age:21&#125;&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; mset user:1 name:zhangsan,age=12 <span class="comment">#修改对象</span></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; getset k3 v33 <span class="comment">#先获取原来的值返回再设置新值，如果不存在返回nil</span></span><br><span class="line"><span class="string">&quot;v3&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; get k3</span><br><span class="line"><span class="string">&quot;v33&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、List"><a href="#3、List" class="headerlink" title="3、List"></a>3、List</h2><ul>
+<li>所有的list命令以l开头</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; lpush list one <span class="comment">#向list插入值，单个或多个均可，插入到列表头部，left</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; lpush list two</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line">127.0.0.1:6379&gt; lpush list three</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; lrange list 0 -1 <span class="comment">#获取所哟元素</span></span><br><span class="line">1) <span class="string">&quot;three&quot;</span></span><br><span class="line">2) <span class="string">&quot;two&quot;</span></span><br><span class="line">3) <span class="string">&quot;one&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; lrange list 0 1 <span class="comment">#从左边获取0到1两个位置的元素，不能从右边获取</span></span><br><span class="line">1) <span class="string">&quot;three&quot;</span></span><br><span class="line">2) <span class="string">&quot;two&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; rpush list r1 r2 r3 r4 <span class="comment">#向list插入值，插入到列表尾部。right</span></span><br><span class="line">(<span class="built_in">integer</span>) 10</span><br><span class="line">127.0.0.1:6379&gt; lpop list <span class="comment">#从头部弹出</span></span><br><span class="line"><span class="string">&quot;3&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; rpop list <span class="comment">#从尾部弹出</span></span><br><span class="line"><span class="string">&quot;r4&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; lindex list 3 <span class="comment">#通过下标获取值，只能用l不能用r</span></span><br><span class="line"><span class="string">&quot;two&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; llen list <span class="comment"># 获取长度</span></span><br><span class="line">(<span class="built_in">integer</span>) 8</span><br><span class="line">127.0.0.1:6379&gt; lrem list a b <span class="comment">#从列表左边按顺序删除a个b元素</span></span><br><span class="line">127.0.0.1:6379&gt; ltrim l 2 6 <span class="comment">#从l左边只保留2到6之内的元素</span></span><br><span class="line">127.0.0.1:6379&gt; rpoplpush l list <span class="comment"># 将l弹出一个push到list中</span></span><br><span class="line">127.0.0.1:6379&gt; rset l 0 r <span class="comment">#将l左边0号索引赋值为r</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; rpush mylist hello</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; rpush mylist world</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line"><span class="comment">#在mylist world后(before/after)插入other</span></span><br><span class="line">127.0.0.1:6379&gt; linsert mylist before world other </span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; lrange mylist 0 -1</span><br><span class="line">1) <span class="string">&quot;hello&quot;</span></span><br><span class="line">2) <span class="string">&quot;other&quot;</span></span><br><span class="line">3) <span class="string">&quot;world&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实际为一个链表，每个node的right/left都要可以插入值</p>
+<p>在左右两边插入或改动值效率最高，中间元素效率较低</p>
+</blockquote>
+<h2 id="4、Set"><a href="#4、Set" class="headerlink" title="4、Set"></a>4、Set</h2><blockquote>
+<p>set中的值不能重复</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; sadd ms 1 <span class="comment">#set添加元素</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; sadd ms 2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; sadd ms 1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS ms <span class="comment"># 查看ms中所有元素 / set中的值不能重复</span></span><br><span class="line">1) <span class="string">&quot;1&quot;</span></span><br><span class="line">2) <span class="string">&quot;2&quot;</span></span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; SISMEMBER ms 1 <span class="comment"># 判断某元素是否存在，返回0/1</span></span><br><span class="line">127.0.0.1:6379&gt; SCARD ms <span class="comment">#获取ms中元素的个数 </span></span><br><span class="line">127.0.0.1:6379&gt; SREM ms 2 <span class="comment">#移除元素</span></span><br><span class="line">127.0.0.1:6379&gt; SRANDMEMBER ms n <span class="comment">#从ms中随机抽取n个元素，不写默认为1</span></span><br><span class="line">127.0.0.1:6379&gt; spop ms n <span class="comment">#随机从ms中删除n个元素</span></span><br><span class="line">127.0.0.1:6379&gt; sdiff k1 k2 <span class="comment"># k1和k2的不同的元素，可扩展至n个</span></span><br><span class="line">127.0.0.1:6379&gt; sinter k1 k2 <span class="comment">#求k1和k2的交集</span></span><br><span class="line">127.0.0.1:6379&gt; sunion k1 k2 <span class="comment">#k1和k2的并集集</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5、Hash"><a href="#5、Hash" class="headerlink" title="5、Hash"></a>5、Hash</h2><blockquote>
+<p>Hash == KEY– &lt;key,value&gt;</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; hset myhash field1 lqs <span class="comment">#存hash</span></span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hmset myhash field1 lqs f2 l2 f3 l3 <span class="comment"># 同时设置多个</span></span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; hget myhash field1 <span class="comment">#取hash值</span></span><br><span class="line"><span class="string">&quot;lqs&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; hmget myhash field1 f2 f3 <span class="comment">#获取多个hash值</span></span><br><span class="line">1) <span class="string">&quot;lqs&quot;</span></span><br><span class="line">2) <span class="string">&quot;l2&quot;</span></span><br><span class="line">3) <span class="string">&quot;l3&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; hgetall myhash <span class="comment"># 获取所有值</span></span><br><span class="line">127.0.0.1:6379&gt; hdel myhash f2 <span class="comment">#删除hash中某个key</span></span><br><span class="line">127.0.0.1:6379&gt; hlen myhash <span class="comment">#获取hash的长度</span></span><br><span class="line">127.0.0.1:6379&gt; hexists myhash field1 <span class="comment">#判断hash中key是否存在</span></span><br><span class="line">127.0.0.1:6379&gt; hkeys myhash <span class="comment"># 获取所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; hvals myhash <span class="comment">#获取所有的value</span></span><br><span class="line">127.0.0.1:6379&gt; hset myhash field 1 <span class="comment"># 设置值</span></span><br><span class="line">127.0.0.1:6379&gt; HINCRBY myhash field1 1 <span class="comment"># 自增</span></span><br><span class="line">127.0.0.1:6379&gt; HDECRBY myhash field1 1 <span class="comment"># 自减</span></span><br><span class="line">127.0.0.1:6379&gt; HSETNX myhash field1 hello <span class="comment"># 不存在则设置，存在就不设置</span></span><br><span class="line"><span class="comment"># hash的value可以存储对象，适合存储用户信息这些经常变动的</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6、Zset"><a href="#6、Zset" class="headerlink" title="6、Zset"></a>6、Zset</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; zadd myset 1 one 2 two 3 three <span class="comment"># 添加多个值</span></span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; ZRANGE myset 0 -1</span><br><span class="line">1) <span class="string">&quot;one&quot;</span></span><br><span class="line">2) <span class="string">&quot;two&quot;</span></span><br><span class="line">3) <span class="string">&quot;three&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="四、三种特殊数据类型"><a href="#四、三种特殊数据类型" class="headerlink" title="四、三种特殊数据类型"></a>四、三种特殊数据类型</h1>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="北辰 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="北辰 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lqs
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://polaris.ink/2020/04/22/Redis/" title="狂神之Redis">http://polaris.ink/2020/04/22/Redis/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Redis-%E7%BC%93%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> Redis 缓存</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/11/Mybatis%E5%AD%A6%E4%B9%A0/" rel="prev" title="Mybatis基础">
+      <i class="fa fa-chevron-left"></i> Mybatis基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/13/MybatisPlus/" rel="next" title="mybatisPlus使用">
+      mybatisPlus使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81NoSql%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、NoSql概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8NoSql"><span class="nav-number">1.1.</span> <span class="nav-text">1、为什么要使用NoSql</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%8D%95%E6%9C%BAMysql"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、单机Mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81MemCached-MySql-%E5%9E%82%E7%9B%B4%E6%8B%86%E5%88%86-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、MemCached + MySql + 垂直拆分(读写分离)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8-%E6%B0%B4%E5%B9%B3%E6%8B%86%E5%88%86-Mysql%E9%9B%86%E7%BE%A4"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、分库分表 + 水平拆分(Mysql集群)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81NoSql"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、为什么要NoSql</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFNoSql"><span class="nav-number">1.2.</span> <span class="nav-text">2、什么是NoSql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E6%BC%94%E8%BF%9B%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">3、阿里巴巴演进分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81NoSql%E5%9B%9B%E5%A4%A7%E5%88%86%E7%B1%BB"><span class="nav-number">1.4.</span> <span class="nav-text">4、NoSql四大分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81KV%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、KV键值对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、文档类型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%88%97%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.3.</span> <span class="nav-text">3、列存储数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%9B%BE%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.4.</span> <span class="nav-text">4、图关系数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Redis%E5%85%A5%E9%97%A8"><span class="nav-number">2.</span> <span class="nav-text">二、Redis入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">1、基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">2.2.</span> <span class="nav-text">2、基础知识</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">三、五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Redis-Key"><span class="nav-number">3.1.</span> <span class="nav-text">1、Redis-Key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81String"><span class="nav-number">3.2.</span> <span class="nav-text">2、String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81List"><span class="nav-number">3.3.</span> <span class="nav-text">3、List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81Set"><span class="nav-number">3.4.</span> <span class="nav-text">4、Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81Hash"><span class="nav-number">3.5.</span> <span class="nav-text">5、Hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81Zset"><span class="nav-number">3.6.</span> <span class="nav-text">6、Zset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%89%E7%A7%8D%E7%89%B9%E6%AE%8A%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">四、三种特殊数据类型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="北辰"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">北辰</p>
+  <div class="site-description" itemprop="description">未来可期</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lqsgoodboy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lqsgoodboy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lqsgoodboy@qq.com" title="E-Mail → mailto:lqsgoodboy@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">北辰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">227k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:27</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+  
+</body>
+</html>

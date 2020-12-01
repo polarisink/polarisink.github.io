@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"polaris.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JSP环境搭配及入门１．tomcat解压后目录：    bin:可执行文件（startup.bat  shutdown.bat)    conf:配置文件（server.xml)    lib:tomcat依赖jar包    log:日志文件（出错信息）    temp:临时文件    webapps:可执行项目（将我们开发的的项目放入该目录）    works:存放由jsp翻译成的java以及编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaWeb学习">
+<meta property="og:url" content="http://polaris.ink/2019/09/29/2020-09-03-JavaWebStudy/index.html">
+<meta property="og:site_name" content="北辰的墨水瓶">
+<meta property="og:description" content="JSP环境搭配及入门１．tomcat解压后目录：    bin:可执行文件（startup.bat  shutdown.bat)    conf:配置文件（server.xml)    lib:tomcat依赖jar包    log:日志文件（出错信息）    temp:临时文件    webapps:可执行项目（将我们开发的的项目放入该目录）    works:存放由jsp翻译成的java以及编">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-14T06:15:57.353Z">
+<meta property="article:author" content="北辰">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://polaris.ink/2019/09/29/2020-09-03-JavaWebStudy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JavaWeb学习 | 北辰的墨水瓶</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">北辰的墨水瓶</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">青松小筑</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">22</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">23</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://polaris.ink/2019/09/29/2020-09-03-JavaWebStudy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="北辰">
+      <meta itemprop="description" content="未来可期">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="北辰的墨水瓶">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaWeb学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-29 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-29T00:00:00+08:00">2019-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-14 14:15:57" itemprop="dateModified" datetime="2020-10-14T14:15:57+08:00">2020-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index"><span itemprop="name">JavaWeb</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>JSP环境搭配及入门<br>１．tomcat解压后目录：<br>    bin:可执行文件（startup.bat  shutdown.bat)<br>    conf:配置文件（server.xml)<br>    lib:tomcat依赖jar包<br>    log:日志文件（出错信息）<br>    temp:临时文件<br>    webapps:可执行项目（将我们开发的的项目放入该目录）<br>    works:存放由jsp翻译成的java以及编辑成的class文件</p>
+<a id="more"></a>
+<p>2.200:一切正常<br>  300/301: 页面重定向<br>  404:资源不存在<br>  403:权限不足<br>  500:服务器内部错误</p>
+<p>3.在项目/WEB_INF/web.xml中设置默认初始页面<br>  <welcome-file-list><br>        <welcome-file>index.jsp</welcome-file><br>  </welcome-file-list></p>
+<p>４．虚拟路径：将web项目配置到webapps以外的目录<br>    a.方式一(需要重启)<br>    在conf/server.xml的host标签中添加<br>    <Context docBase="" Path=""  />　docbase是实际路径，path是虚拟路径(绝对路径或相对路径,想对于webapps)</p>
+<pre><code>b.方式二(不需要重启)
+在conf/Catalina/localhost新建JspProject.jsp，在其中添加：
+&lt;Context docBase=&quot;&quot; Path=&quot;&quot;  /&gt;　docbase是实际路径，path是虚拟路径(绝对路径或相对路径,想对于webapps)</code></pre>
+<p>５．虚拟主机：通过<a target="_blank" rel="noopener" href="http://www.test.com访问本机/">www.test.com访问本机</a><br>  a.conf/server.xml添加<br>  <host name="www.test.com" appBase="webapps"  /><br>          <Context docBase="" Path="/"/><br>      </host><br>  将defaultHost=”<a target="_blank" rel="noopener" href="http://www.test.com&quot;/">www.test.com&quot;</a><br>  b.修改本机host文件</p>
+<p>６．jsp的执行流程<br>  第一次访问：服务端将jsp翻译为java,再将java翻译为class文件，这些文件存储在work/Catalina/*/*org/apache<br>  第二次访问：直接访问class文件(如果服务端代码修改了，再访问时要重新翻译编译)</p>
+<p>７.tomcat乱码<br>  a.file-&gt;settings-&gt;File Encodings,将字符格式全改为utf-8<br>  b.打开Idea工作目录，将/home/lqs/下载/idea-IU-192.6817.14/bin/idea.vmoptions和idea64.vmoptions追加：-Dfile.encoding=UTF-8<br>  c.在run-&gt;edit congfigurations的VM　options追加:-Dfile.encoding=UTF-8</p>
+<p>  热部署问题:<br>  update：更新操作<br>  frame：idea失去焦点时触发，选择update classes and resources</p>
+<p>8.Ecplise添加Tomcat<br>　a.将tomcat/lib中的servlet-api.jar加入项目构建路径<br>　b.右键项目-&gt;Build Path-&gt;Add library-&gt;Server Runtime</p>
+<p>　部署tomcat：<br>　在tomcat面板新建一个tomcat实例，再在该实例中部署(右键-&gt;add)<br>　一般建议将ecplise中的tomcat与本地的配置信息保持一致，即设为托管模式。第一次创建tomcat实例时，双击选择use tomcat installation</p>
+<p>９．统一字符集编码<br>　a.编码分类：<br>　　设置jsp文件的编码：(jsp文件的pageEncoding属性)jsp-&gt;java<br>　　设置浏览器读取jsp文件编码(jsp文件的content属性)<br>　　一般将上述设置成一直编码，推荐UTF-8<br>　　可以将Ecplise的文件统一设置为UTF-8：window-&gt;Preferences-&gt;Jsp 　　Files-&gt;Encoding<br>　　将某一个项目统一为UTF-8：<br>　　将单独文件设置为UTF-8</p>
+<p>10.ecplise中创建的web项目，浏览器可以直接访问web-content的文件，web-inf权限较高，无法通过客户段直接访问，只能通过请求转发访问，并不是任何你日不跳转都可以访问web-inf.原因是跳转有两种方式，请求转发，重新定向</p>
+<p>11.彻底删除项目<br>　1.stop tomcat服务器<br>　2.删除webapp下的该项目<br>　3.将work/Catalina/localhost目录下的该项目删除</p>
+<p>12.jsp页面元素：html java代码(脚本Scriptlet),指令，注释<br>    脚本Scriptlet:1.//java代码(定义局部变量，java语句)<br>                    &lt;%<br>                        String name=”lxl”; //局部变量<br>                        out.print(“hello”+name);<br>                        init();<br>                    %&gt;<br>                 2.//定义全局变量，方法<br>                     &lt;%!<br>                         public String lover;<br>                        public void init(){<br>                            lover=”LXL”;<br>                        }<br>                     %&gt;<br>                  3. //输出内容<br>                    &lt;%=”hello”+lover%&gt;</p>
+<pre><code> 一般而言，修改web.xml,配置文件，java需要重启服务器
+ 修改html/css/jsp不需要重启
+ out.println()不能回车，用&lt;br/&gt;代替
+
+ 指令
+ page指令：jsp首个尖号的内容
+ language:脚本语言
+ import:导入类
+ pageEncoding:jsp文件自身编码
+ contentType:浏览器解析jsp编码
+
+ 注释：html注释：&lt;!--  --&gt;　(浏览器查看源代码时可以看见，其他两个不能被看见)
+      java注释：//  /*...*/
+      jsp注释：/%--  --%/</code></pre>
+<p>13.jsp九大内置对象(不需要new的对象)：<br>    out:向客户端输出内容<br>    pageContext:jsp页面容器<br>    response:响应对象<br>    request:请求对象<br>    session:会话对象<br>    application:全局对象<br>    config:配置对象<br>    page:当前jsp页面对象<br>    exception:异常对象<br>    response:响应对象</p>
+<pre><code>四种范围对象：
+pageContext:jsp页面容器        当前页面有效，跳转后无效　
+request:请求对象　            同一次请求有效(请求转发有效，重定向后无效)
+session:会话对象　            同一次会话有效(无论怎么跳转都有效;关闭/切换浏览器后无效，从登录到退出都有效)
+application:全局对象            全局有效(切换浏览器仍然有效)关闭服务器、其他项目无效
+(想要多个项目共享、重启仍然有效：JNDI)
+以上四个对象共有方法：
+    Object getAttribute(String name):根据属性名或属性值
+    void setAttribute(String name,Objetc obj):设置属性值，可新增或修改
+    void remove(String name):根据属性名删除对象
+以上范围对象尽量使用最小的范围，减小开销
+
+
+
+
+response:响应对象
+    void addCookie(Cookie cookie)：服务端向客户端增加cookie对象
+    void sendRedirect(String location)　throws IOException:页面跳转的一种方式:重定向
+    void setConteType(String type):设置服务端响应的编码(设置服务端的contentTypele类型)
+
+request:请求对象，存储客户端向服务端请求的服务信息，只在同一次请求有效，当地址栏回车时，发出第二次请求，如果点击F5刷新，则浏览器会重复刚才的行为
+    String getParameter(String name):根据请求的字段名key,返回字段值value（input标签的ｖalue属性值)
+    String[] getParameterValues(String name):根据请求的字段名key,返回多个字段值value
+    setCharacterEncoding(&quot;utf-8&quot;)：设置请求编码(tomcat7以前默认iso-8859-1,tomcat8及以后默认ｕtf-8)
+    getRequestDispatcher(&quot;b.jsp&quot;).forward(request,response):请求转发a-&gt;b
+    getServerContext():获取项目的ServeltConText对象
+    示例：注册
+        register.jsp,show.jsp
+        http://localhost:8080/LxlWebProject/show.jsp?uname=17375005417&amp;upwd=fsdgfsr&amp;uage=21&amp;uhobbies=%E7%AF%AE%E7%90%83
+        http://链接/文件?参数名１＝参数值１&amp;参数名2＝参数值2&amp;参数名3＝参数值3&amp;参数名4＝参数值4&amp;
+        get提交方式：method=&quot;get&quot;和地址栏,超链接方式(&lt;a herf=&quot;&quot;&gt;)请求方式默认都属于get提交方式
+        get与post的区别：
+            a.get方式在地址栏显示请求信息(但地址栏能容纳的信息有限，５kb以下，如果请求数据存在打文件如音视频会报错)，post不显示
+            b.文件上传操作必须是post，　
+        统一请求编码：
+        get如果出现乱码:
+        a.一个一个的改，很麻烦：
+        new String(name.getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;);
+        b.修改server.xml,一次性更改get提交方式的编码：
+        在改端口号的地方加：URIEncoding=&quot;utf-8&quot;;
+        建议使用tomcat时首先在server.xml中统一修改get的编码
+        post出现乱码：
+        request.setCharacterEncoding(&quot;utf-8&quot;);仅对post有效
+                                请求转发　    重定向
+        地址栏是否改变                不变            改变
+        是否保留第一次请求的数据        保留            保留
+        请求次数                    １　            ２
+        转发：客户端-&gt;服务窗口A-&gt;服务窗口B
+        重定向：客户端-&gt;服务窗口A-&gt;去找B
+        　　　　客户端-&gt;服务窗口B-&gt;结束
+
+session：会话
+    类型：
+    a.浏览网站：开始到关闭
+    b.购物:浏览　付款　退出
+    c.电子邮件：浏览　写邮件　退出
+
+    机制：　　
+    客户端第一次请求服务器时，(匹配失败，分配一个session)服务端会产生一个session对象（用于保存客户的信息）
+    每个session对象都有一个sessionId(用于区分其他session)
+    服务端会产生一个cookie，该cookie的name=JSESSION,value=服务器sessionId的值
+    因此客户端cookie与服务端的session一一对应　
+    客户端在第二/N次请求服务端时：服务器会用客户端cookie去匹配中的JSESSIONID副服务端的sessionId：
+        如果匹配成功(cookie jsession 和session sessionId).说明次用户不是第一次反问该服务端，无需再登录
+        匹配失败
+        例子：
+        客户端：        顾客
+        服务端：　    商场
+        顾客第一次存包，商场判断此人之前是否存在过包（通过你手中是否有钥匙判断）如果是新顾客（没钥匙），分配一个钥匙给顾客，钥匙与柜子一一对应
+        顾客第二次存包，商场判断此人之前存过包（通过手中是否有钥匙）如果是老顾客，则不需要分配，该顾客手中的钥匙会与柜子一一对应）　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+    性质：
+    a.session存储在服务端
+    b.session是在同一个用户请求时共享
+    c.实现机制：第一次客户请求时，产生一个sessionId并复制给cookie的jsessionid然后发给客户端。最终连通
+
+    方法：
+    String getId():获取sessionId
+    bollean isNew():判断是否是新用户(第一次访问)
+    void invalidate():使session失效
+    void setAttribute():
+    Object getAttribute():
+    void setMaxInactiveInterval():设置最大有效非活动时间
+    int getMaxIncativeInterval():查看最大有效非活动时间
+    application:全局对象
+        String getContextPath():虚拟路径
+        String getRealPath():绝对路径（虚拟路径相对的绝对路径）</code></pre>
+<ol start="14">
+<li><p>Cookie(客户端，不是内置对象,但服务端会自动产生一个name=JSESSIONID的cookie并返还给cookie)<br>由服务端生成，再发给客户端保存。<br>作用：提高访问服务器的效率，但是安全性较差。相当与本地缓存<br>Cookie:key=value,由javax.servlet.http.Cookie产生<br>public Cookie(String key,String value):产生cookie对象<br>String getName(String name):获取key<br>String getValue():获取value<br>void setMaxAge(int expiry):设置最大有效期，为安全考虑</p>
+<p>服务器准备cookie给客户端：<br>response.addCookie(Cookie cookie)<br>页面跳转(转发，重定向)<br>客户端获取cookie:<br>request.getCookies();必须一次性获取全部cookie，不能单独拿到某一个cookie</p>
+<p>使用cookie实现记住用户名的功能<br>建议cookie只保存英文和数字，否则需要进行编码，解码</p>
+<p>session和cookie的区别：</p>
+<pre><code>            session         cookie</code></pre>
+<p>保存的位置        服务端　　        客户端<br>安全性            较安全            较不安全<br>保存内容            Object             String     </p>
+</li>
+</ol>
+<p>15.JDBC:Java Database Connectivity,可为多种关系型数据库DBMS提供统一的访问方式，用java操作<br>   JDBC DriverManager:管理不同的数据库驱动　<br>   JDBC API:</p>
+<pre><code>       作用：
+        与数据库建立连接
+        发送SQL语句
+        返回处理结果
+
+       通过一下类/接口实现：
+        DriverManager:管理jdbc驱动
+        Connection：连接(通过drivermanager产生)
+
+        Statement：增删改查（通过connection产生：connection.createStatement()方法
+        Statement操作数据库：
+        增删改：executeUpdate()
+        查询:executequery()
+
+        PrepareStatement操作数据库：增删改查（通过connection产生：connection.prepareStatement()
+        public interface PreparedStatement extends Statement
+        因此
+        增删改：executeUpdate()
+        查询:executequery()
+        赋值操作：setXxx()
+
+        CallableStatement：调用数据库的存储过程/存储函数（通过connection产生:
+            prepareCall(参数：存储过程或存储函数名)
+            参数格式：存储过程：无返回值，用out参数代替
+                            &#123;call 存储过程名（参数列表）&#125;
+                    存储函数：有return返回值
+                            &#123; ? = call 存储函数名（参数列表）&#125;
+        create or replace procedure addTwoNum(num in int,num2 in int,result out int)
+        as
+        bengin
+        result:=num1+num2;
+        end;
+        /
+
+        通过sqlplus访问数据库，只需要开启：OracleServiceSID
+        通过其他则需要访问数据(such as sqldeveloper,JDBC),需要开启：OracleServiceSID,XxListener
+
+        PreparedStatement与Statement区别：
+        statement： sql
+                    executeUpdate()
+        PreparedStatement:sql(可能存在占位符)
+                      在创建ps对象时，将sql预编译：PreparedStatement(sql)
+                      setXxx()替换占位符
+                      executeUpdate()
+
+        开发推荐使用preparedStatement：
+        1.编码更简便(避免字符串拼接)
+        String name = &quot;zs&quot;;
+        int gae = 23;
+
+        stmt:
+        String sql = &quot;insert into student (stuno,stuname) values (&#39;&quot;+name+&quot;&#39;,&quot;+age+&quot;)&quot;;
+        stmt.executeUpdate()
+
+        pstmt:
+        String sql = &quot;insert into student (stuno,stuname) values (?,?)&quot;;
+        pstmt = connection.preparedStatement(sql); //预编译sql
+        pstmt.setString(1,name);
+        pstmt.setInt(2,age);
+
+        callableStatement:
+        cstmt = connection.preparecall(); //产生调用存储过程的对象
+        cstmt.setXxx(1,30) //通过set处理输入参数值
+        cstmt.set(3,Types.INTERGER) //通过set设置输出参数类型
+        cstmt.execute(); //执行
+        rs = cstmt.get(3); //获取输出值
+        sout(rs); //打印输出值
+
+        2.提高性能（有预编译操作）
+        需要重复增加100次
+        stmt:
+        String sql = &quot;insert into student (stuno,stuname) values (&#39;&quot;+name+&quot;&#39;,&quot;+age+&quot;)&quot;;
+        for(100)
+            stmt.executeUpdate(sql) //sql编译100次
+
+        pstmt:
+        String sql = &quot;insert into student (stuno,stuname) values (?,?)&quot;;
+        pstmt = connection.preparedStatement(sql); //预编译sql
+        pstmt.setString(1,name);
+        pstmt.setInt(2,age);
+        for(100)
+            pstmt.executeUpdate() //sql只用编译一次
+
+        3. 安全(有效防止sql注入:将客户 输入内容与sql语句混为一体)
+        stmt存在被sql注入的风险：例如输入用户名：abc(任意值) ’ or 1=1 -- ,密码：def(任意值)
+
+        Result:返回的结果集（通过statement产生）
+    next():下移光标，判断下移之后的元素是否有数据，有返回true，没有返回false
+       previous():下移光标，判断下移之后的元素是否有数据，有返回true，没有返回false
+       getXxx(字段名or位置下标):获取指向行的数据
+
+
+       访问过程：
+           try&#123;
+        a.导入驱动，加载具体驱动类Class.forName()
+        b.与数据库建立链接connection = DriverManager.getConnection()
+        c.通过connection获取操作数据库的对象（Statement/preparedStatement/callableStatement）
+        stmt = connection.createStatement()
+        d.(查询需要)处理结果集 rs = pstmt.executeQuery()
+        where(rs.next()) &#123;rs.getXxx()&#125;
+        &#125;catch(ClassNotFounException e)&#123;...&#125; //class.forName()抛出
+        catch(SqlException)&#123;...&#125;  //sql语句抛出
+        catch(Exception e) &#123;...&#125;
+        finally&#123;
+            //关闭顺序与打开顺序相反
+            if(rs != null)rs.close();
+            if(stmt != null) stmt.close();
+            if(connection != null)connection.close();
+        &#125;</code></pre>
+<p>   数据库驱动：            驱动jar<br>           Oracle            ojdbc-x.jar<br>           MySQL            mysql-connector-java-x.jar<br>           SqlServer        sqljdbc-x.jar</p>
+<p>16.处理CLOB/BLOB类型<br>处理稍大型数据<br>a.通过JDBC存储路径，然后进行IO操作<br>b.<br>  CLOB(mysql用Text)：大文本数据:大文本数据（小说-数据）  字符流:Reader、Writer<br>  存:1.通过pstmt的占位符？代替小说内容<br>      2.通过流操作pstmt.setCharacterStream(2,reader,(int)file.length()); 将？替换为小说流<br>  取:1.通过Reader reader = rs.getCharacterStream(“novel”); 将clob保存在reader中<br>     2.将reader通过writer输出</p>
+<p>  BLOB：二进制 字节流：in、out<br>  与CLOB基本一致，区别：getCharacterStream();getBinaryStream()<br>create table mynovel (id int primary key,novel clob);</p>
+<p>17.JSP访问数据库<br>  在jsp代码中嵌套java代码，用&lt;% %&gt;<br>  java项目导包:将jar包导入java项目中，右键build path<br>  web项目导包:将jar复制进WEB-INF/lib下</p>
+<p>  jsp出现错误：the import Xxx type is not resolved<br>    a.jdk和tomcat版本问题:右键项目build path查看报错的lib删除后导入<br>    b.清空tomcat和project的缓存<br>    3.删除之前的tomcat，重新解压缩，配置tomcat，计算机重启<br>    c.如果类不在包中，新建一个包，将类放入其中<br>18.JavaBean:将jsp中登陆代码转移到LoginDao.java中,其中LoginDao成为Javabean<br>  作用：减轻jsp复杂度 &amp;&amp; 提高代码复用<br>  JavaBean的定义:满足 1.public修饰类，无参构造方法 2.所有属性都是private，提供get和set方法(boolean可以用is替换get)<br>  使用层面分为两类:<br>    a.封装业务逻辑javaBean (Logindao封装登陆逻辑)<br>    如将jsp中的jdbc代码封装到Login.java中<br>    b.封装数据的JavaBean(实体类，例如student.java)<br>    对应数据库中的一张表<br>    Login login = new Login(uname,upwd); //用login对象封装两个数据</p>
+<p>  Servlet:<br>  java类必须符合一定的规范:<br>    a.必须继承javax.servlet.http.HttpServlet<br>    b.重写其中的doGet() and doPost()<br>      doGet()：接受并处理所有get的请求and doPost()<br>  要想使用Servlet：必须配置<br>  Servlet2.5:web.xml<br>  Servlet3.0:@WebServlet<br>  Servlet原理:请求-&gt;<url-pattern> -&gt;根据<servlet-mapping>中的<servlet-name>去匹配<servlet-name>，最终寻找到servlet.class<br>  Servlet流程(手工方式 ):<br>    1.编写一个类extends Httpservlet，重写doGet()和doPost()<br>    2.编写web.xml中的servlet映射<br>    借助eclipse快速生成:直接新建Servlet<br>  Servlet3.0与2.5的区别:<br>  3.0不需要配置web.xml,但需要在servlet的类定义处编写注解:@WebServlet(“/WelcomeServlet”)<br>  流程:请求地址与@WebServlet中的值匹配，如果成功，则说明请求的就是该注解对应的类</p>
+<p>  项目根目录:WebContent src(所有的构建路径)<br>  例如:<br>  Webcontent中有一个文件index.jsp,当他请求:<br>  <a href="abc">…</a>,则在Webcontent或src中寻找<br>  <a href="a/abc">…</a>,则在Webcontent或src中寻找a目录，再在其中寻找abc<br>  /的意义：<br>  web.xml:项目根路径 <a target="_blank" rel="noopener" href="http://localhost:8080/Servlet30Project/">http://localhost:8080/Servlet30Project/</a><br>  jsp:服务器根路径 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a></p>
+<p>  Servlet生命周期:5个阶段(加载-&gt;卸载-&gt;服务-&gt;销毁-&gt;卸载)<br>  加载:Servlet自动处理<br>  初始化:init():Servlet被夹在并实例化之后执行<br>    默认第一次访问时被执行(只执行一次)<br>    可以修改为Tomcat启动时执行:<br>    Servlet2.5:添加<servlet><load-on-startup>1</load-on-startup></servlet>(中间的1为不同servlet的执行顺序)<br>    Servlet3.0:servlet注解变为:@WebServlet(value=”/WelcomeServlet” loadOnStartUp=1)<br>  服务: 根方法，抽象方法 :service(ServletRequest req, ServletResponse res)<br>      doGet()<br>      doPost()<br>  销毁:destory():Servlet被系统回收时执行(关闭tomcat服务时，执行一次)<br>  卸载:Servlet自动处理</p>
+<p>  Servlet API(适用于任何通信协议):两个软件包组成:对应HTTP协议的软件包 and 除HTTP协议之外的软件包<br>  我们学习的是位于javax.servlet.http包的类和接口<br>  Servlet继承关系:自定义ervlet-&gt;继承HttpServlet-—&gt;继承GenericServlet—&gt;实现Servlet,ServletConfig,Serializable</p>
+<p>  ServletConfig:接口<br>    getServletname():<br>    getServletContext():获取上下文对象,产生application对象<br>    getInitparameter(String name):在当前Servlet范围内，获取名为name的参数值(初始化参数)<br>  ServletContext中的常见方法(application对象的方法):<br>    getRealPath():获取绝对路径<br>    getContextpath():获取相对路径<br>    setAttribute():<br>    getAttribute():<br>    getInitparameter(String name):在当前Web容器范围内，获取名为name的参数值(初始化参数)</p>
+<pre><code>Servlet3.0设置初始化参数:
+@WebServlet(value=&quot;/WelcomeServlet&quot;,loadOnStartup=1,initParams=&#123;@WebInitparam(name=&quot;servletparams&quot; value=&quot;&quot;)&#125;)
+该注解值隶属于某一个具体的Servlet，不能为整个web容器设置初始化参数，只能在web.xml中设置
+HttpservletRequest:通request一致，例如setAttribute(),getCookies()
+HttpservletResponse:通response一致</code></pre>
+<p>  使用层面:<br>  eclipse中src创建一个Servlet，然后重写doGet(),doPost(),两者只需要编写一个<br>  建议一个servlet对应一个功能</p>
+<p>19.MVC设计模式<br>  M:model模型:功能，用JavaBean实现<br>  V:view视图:用于展示以及与用户交互。用html/css/jsp/js/jquery等前端技术实现<br>  C:controller控制器:接受请求，将请求跳转到模型进行处理，处理结果返回给控制器。可以用jsp实现，但建议用Servlet实现控制器</p>
+<p>20.三层架构(与MVC的目标一致:为了解耦合，提高代码复用.但二者对项目理解不同)<br>  表示层:(USL,UserShowLayer;视图层)<br>    -前台:对应MVC中的View，用于交互和界面显示<br>      jsp js html css jQuery等前端技术,Webcontent中<br>    -后台:对应MVC中的Controller,用于页面控制跳转，调用业务逻辑层<br>      Servlet (SpringMVC Struts2 …),位于Xxx.servlet包中</p>
+<p>  业务逻辑层:(BLL,BusinessLogiclayer;Service层<br>    -组装数据访问层，逻辑性操作(增删改查，删：查+删) 位于Xxx.service包中or Xxx.manager</p>
+<p>  数据访问层:(DAL,DataAccesslayer;Dao层)<br>    -直接访问数据库，原子性操作(增删改查) 位于Xxx.dao包中</p>
+<p>  三层之间的关系:上层将请求传递给下层,下层处理后返回给上层.上层依赖于下层<br>    依赖:持有成员变量</p>
+<p>  三层优化:<br>    加入接口,建议面向接口开发：先接口，再实现类:service,dao加入接口<br>    接口与实现类的命名规范:<br>      接口:interface            起名:IXxxService            IXxxDao<br>      接口所在包:xxx.service<br>      实现类:implements        起名:XxxServiceImpl        XxxDaoImpl<br>      实现类所在包:xxx.service.impl<br>      接口 x = new 实现类(); 例子:<br>      IStudentDao studentDao = new StudentdaoImpl();</p>
+<pre><code>DBUtil数据库帮助类,简化Dao层的代码量
+建议写在一个util包中
+
+方法重构:将多个方法的共同代码提炼出来，单独写在一个方法中
+
+web调试</code></pre>
+<p>21.分页:第n页的数据:<br>  Oracle/sqlServer从1开始:1        1            10<br>                           2        11            20<br>                         n      (n-1)<em>10+1    n</em>10<br>  mysql从0开始:             0        0               9<br>                             1        10            19<br>                             n         n*10        (n+1)*10-1</p>
+<p>  Mysql实现分页的sql:<br>  limit 开始,多少条<br>  第0页:select * from limit 0,10<br>  第n页:select * from limit n*10,10</p>
+<p>  Oracle实现分页的sql:<br>  select * from student where sid &gt;=(n-1)<em>10+1 and sid &lt;=n*10; //存在漏洞，必须id值连续<br>  select rownum,t. * from student order by t.sid asc ; //根据sid排序则rownum会混乱(方法:分开使用，先只排序，再只rownum);rownum不能排序&gt;<br>    select * from (select rownum, t.* from<br>    (select s.</em> from student s order by sid asc) t<br>    )where r&gt;= (n-1)<em>10+1 and r&lt;= n810;<br>  优化:<br>    select * from (<br>        select rownum r,t. * from<br>        (select s.</em> from student s order by sid asc) t<br>        rownum &lt;= n*10<br>    )</p>
+<p>  SQLServer分页:<br>  sqlserver2003支持:<br>    select top 页面大小 * from student where id not in<br>    (select top (页数—1)*页面大小 id from student order by sid asc) //缺陷:如果id不连续，则不能保证分页正常<br>  sqlserver2005支持:<br>    row_number() over(字段);<br>    select * from (<br>      select row_number() over (sid order by sid asc) as r,* from student<br>    )where r &gt;=(n-1)*10+1 and;<br>  sqlserver2012支持:<br>    select * from student order by sid<br>    offset (n-1)*10+1 fetch next 页面大小 rows only;</p>
+<p>  Oracle与SQLServer区别:</p>
+<p>  分页实现:<br>  5个变量:<br>    数据总数:select count(*)<br>    页面大小(每页显示的数据条数):自定义<br>    总页数:程序自动计算=数据总数/页面大小==0?数据总数/页面大小:数据总数/页面大小+1<br>    当前页(页码):<br>    当前页的对象集合:每页所显示的所有数据</p>
+<p>22.上传<br>    上传必须再form中添加3个属性<br>    type=”file”<br>    method=”post”<br>    enctype=”multipart/form-data”</p>
+<pre><code>上传的目录:
+1.修改代码，tomcat重启时会删除文件.原因:tomcat会重新编译一份class并重新部署
+2.不修改代码，则不会删除:(因为没有删除代码)
+建议:为了防止删除文件夹，可a:新建虚拟路径b:将上传文件夹定在tomcat服务器之外</code></pre>
+<p>  限制上传:类型和大小</p>
+<p>  对文件的限制条件，写在parseRequest之前</p>
+<p>  下载:不需要jar包<br>    请求(地址a，form)，请求Servlet<br>    Servlet通过文件的地址，将文件转为输入流读到Servlet中<br>    通过输出流将刚才已转为输入流的文件，输出给用户<br>    文件类型                contentType<br>    二进制文件(任何类型)    application/octet-stream<br>    word                application/msword<br>    excel                application/vnd.ms-excel<br>    ppt                 application/vnd.ms-powerpoint<br>    图片                 image/gif,image/bmp,image/jpeg,image/png<br>    文本文件                text/plain<br>    html网页             text/html<br>    中文文件名乱码解决方法:URLEncoder.encode(fileName,”UTF-8”)) //java.net包</p>
+<p>23.EL表达式,Expression language,可以替代jsp页面中的java代码<br>  jsp中潜逃Java代码的弊端:类型转换，需要处理null，代码参杂:<br>  EL实例:${requestScope.student.address}<br>  ${域对象.域对象属性.属性.属性}<br>  EL操作符:<br>    点操作符:.        使用方便<br>    中括号操作符:[]    功能强大,可以包含特殊字符(. 、 - )<br>                    [‘’]==.<br>                    <a href="%E6%97%A0%E5%BC%95%E5%8F%B7%E5%88%99%E4%B8%BA%E5%8F%98%E9%87%8F">变量名</a><br>                    可以获取数组元素<br>                    可以拿map对象<br>  EL关系运算符<br>  大于            &gt; or gt     ${2&gt;1} or ${2 ge 1}        true<br>  大于或等于        &gt;= or ge     ${2&gt;=1}<br>  等于            == or eq     ${2==1}<br>  小于或等于        &lt;= or le     ${2&lt;=1}<br>  小于             &lt; or lt<br>  不等于            != or ne</p>
+<p>  EL逻辑运算符<br>  ||  or         &amp;&amp; and             !  not</p>
+<p>  Empty运算符:判断一个值是否为null或不为空.null或空则为true</p>
+<p>  EL表达式的隐式对象(不需要new就能使用的对象):<br>    作用域访问对象:pageScope requestScope sessionScope applicationScope<br>                如果不指定域对象，则默认根据从小到大的顺序依次取值<br>    参数访问对象:获取表单数据<br>               request.getparameter()    request.getParametervalues()<br>               ${param}                    ${paramValues}<br>    jsp隐式对象:pageContext(在jsp中通过pageContext获取其他的jsp隐式对象)<br>              ${pageContext.getSession()} –&gt;${pageContext.session}<br>                 ${pageContext.getResponse()} –&gt;${pageContext.response}<br>                 可以使用此方法级连获取方法:方法名去掉get和()再将首字母变小写 </p>
+<p>24.JSTL:比EL更强大<br>  引入两个Jar:jst1.jar     standard.jar<br>  引入taglib<br>  &lt;%@ taglib uri=”<a target="_blank" rel="noopener" href="http://java.sun.com/jsp/jstl/core&quot;">http://java.sun.com/jsp/jstl/core&quot;</a> prefix=”c” %&gt; //prefix为前缀</p>
+<p>  核心标签库:通用标签库        条件标签库    迭代标签库<br>  通用标签库<br>  &lt;c:set&gt;在某个作用域中给某个变量赋值<br>    &lt;c:set var=”name”    value=”zhangsan”  scope=”request”/&gt;<br>  ==  &lt;% request.setAttribute(“name”,”zhangsan”); %&gt;<br>  &lt;c:set&gt;在某个作用域中给某个变量的属性赋值(不用指定scope)<br>      &lt;c:set target=”${requestScope.student}” property=”sname” value=”zxs” /&gt;<br>  &lt;c:set&gt;给map对象赋值<br>  &lt;c:set target=”${requestScope.student}” property=”sname” value=”zxs” /&gt;<br>  &lt;c:set&gt;考研给不存在的变量赋值(但不能给不存在的对象赋值)</p>
+<p>  传统EL:${requestScope.student}<br>  c:out:&lt;c:out value=”${requestScope.student}”&gt;<br>  更强大在于:不存在的数据显示默认值</p>
+<p>  &lt;c:out value=’<a target="_blank" rel="noopener" href="https://www.baidu.com">百度</a>‘ escapeXml=”true” default=”变量为空时显示的值”&gt;<br>  &lt;c:out value=’<a target="_blank" rel="noopener" href="https://www.baidu.com">百度</a>‘ escapeXml=”false”&gt;</p>
+<p>  &lt;c:remove var=”” scope=”request”&gt;  //在某个域删除某变量</p>
+<p>  条件标签库<br>  &lt;c:if test=”${10&lt;2}” scope=”request” var=”result”&gt;<br>      true<br>      ${result} //从pageScope requestScope sessionScope applicationScope从小到大找<br>  </c:if></p>
+<p>  //多重if，类似于switch<br>  //test后面不能有空格<br>  &lt;c:choose&gt;<br>    &lt;c:when test=””&gt;</c:when><br>    &lt;c:when test=””&gt;</c:when><br>    &lt;c:when test=””&gt;</c:when><br>    &lt;c:other&gt;</c:otherwise><br>  </c:choose></p>
+<p>  迭代标签库<br>  &lt;c:forEach var=”” begin=”” end=”” step=”” varStatus=”status”&gt;<br>    ${status.index}<br>    test<br>  &lt;/c;forEach&gt;</p>
+<p>  //也不能有空格，否则对象变为字符串<br>  &lt;c:forEach var=”name” items=”${requestScope.names}”<br>  </c:forEach></p>
+<p>25.过滤器：<br>  实现一个Filter接口<br>  init()、destroy() 原理、执行时机 同Servlet<br>  配置过滤器，类似servlet<br>  通过doFilter()处理拦截，并且通过chain.doFilter(request, response);放行</p>
+<p>  filter映射</p>
+<p>  只拦截 访问MyServlet的请求<br>    <url-pattern>/MyServlet</url-pattern><br>  拦截一切请求（每一次访问 都会被拦截）<br>  <url-pattern>/*</url-pattern></p>
+<p>  通配符</p>
+<p>  dispatcher请求方式：<br>  REQUEST：拦截HTTP请求 get post<br>  FORWARD：只拦截 通过 请求转发方式的请求</p>
+<p>  INCLUDE:只拦截拦截通过 request.getRequestDispatcher(“”).include()  、通过&lt;jsp:include page=”…” /&gt;此种方式发出的请求<br>  ERROR：只拦截<error-page>发出的请求</p>
+<p>  过滤器中doFilter方法参数：ServletRequest<br>  在Servlet中的方法参数：HttpServletRequest</p>
+<p>  过滤器链<br>  可以配置多个过滤器，过滤器的先后顺序 是由 <filter-mapping>的位置 决定</p>
+<p>25.监听器<br>  监听对象:<br>  request ServerRequestListener<br>  session HttpSessionListener<br>  application ServerContextListener</p>
+<hr>
+<p>1.热部署，如果是run启动仅JSP等静态资源有效<br>  如果是debug启动java和jsp等均有效<br>  编写servlet中需加入tomcat环境</p>
+<p>2.JDNI:java命令与目录接口</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="北辰 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="北辰 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lqs
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://polaris.ink/2019/09/29/2020-09-03-JavaWebStudy/" title="JavaWeb学习">http://polaris.ink/2019/09/29/2020-09-03-JavaWebStudy/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/17/mysql%E5%88%9D%E7%BA%A7Sql%E6%80%BB%E7%BB%93/" rel="prev" title="mysql初级Sql总结">
+      <i class="fa fa-chevron-left"></i> mysql初级Sql总结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/11/Mybatis%E5%AD%A6%E4%B9%A0/" rel="next" title="Mybatis基础">
+      Mybatis基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="北辰"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">北辰</p>
+  <div class="site-description" itemprop="description">未来可期</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lqsgoodboy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lqsgoodboy" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lqsgoodboy@qq.com" title="E-Mail → mailto:lqsgoodboy@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">北辰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">227k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:27</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+  
+</body>
+</html>
