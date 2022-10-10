@@ -24,7 +24,7 @@
 <meta property="og:description" content="categories: Gitindex_img: https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1664987306980-ef638d1f42a2  实习的时候使用的 git 管理方式">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-13T13:41:50.000Z">
-<meta property="article:modified_time" content="2022-10-10T06:23:19.353Z">
+<meta property="article:modified_time" content="2022-10-10T06:39:46.321Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -278,32 +278,32 @@
 <p>实习的时候使用的 git 管理方式</p>
 <span id="more"></span>
 
-<h1><span id="1-clone-项目到本地">1、clone 项目到本地</span></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone git@github.com:##orgname##/##reponame##<br></code></pre></td></tr></table></figure>
+<h1 id="1、clone-项目到本地"><a href="#1、clone-项目到本地" class="headerlink" title="1、clone 项目到本地"></a>1、clone 项目到本地</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone git@github.com:##orgname##/##reponame##<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>不能使用 fork，必须 clone<br>fork 用于载服务器端建立副本，clone 创建项目的本地副本</p>
 </blockquote>
-<h1><span id="2-初始化-gitflow">2、初始化 gitflow</span></h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> <span class="hljs-comment">#reponame#</span><br>git hf init<br></code></pre></td></tr></table></figure>
+<h1 id="2、初始化-gitflow"><a href="#2、初始化-gitflow" class="headerlink" title="2、初始化 gitflow"></a>2、初始化 gitflow</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> <span class="hljs-comment">#reponame#</span><br>git hf init<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>每次 clone 存储库都需要这么做</p>
 </blockquote>
-<h1><span id="3-创建特性分支">3、创建特性分支</span></h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 如果开始一个从，需要start<br>git hf feature start #feature-name#<br># 如果开始在一个已经存在的个人分支上工作，直接checkout即可<br></code></pre></td></tr></table></figure>
+<h1 id="3、创建特性分支"><a href="#3、创建特性分支" class="headerlink" title="3、创建特性分支"></a>3、创建特性分支</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 如果开始一个从，需要start<br>git hf feature start #feature-name#<br># 如果开始在一个已经存在的个人分支上工作，直接checkout即可<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>所有的工作（新特性、不紧急的 bug 修复）都必须在功能开发分支进行<br>特性分知名需要得体，可以使用代号为功能开发分支命名<br>如果主存储库一级存在该功能开发分支，命令会失效</p>
 </blockquote>
-<h1><span id="4-在-github-发布功能开发分支">4、在 github 发布功能开发分支</span></h1><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">git hf <span class="hljs-built_in">push</span><br></code></pre></td></tr></table></figure>
+<h1 id="4、在-github-发布功能开发分支"><a href="#4、在-github-发布功能开发分支" class="headerlink" title="4、在 github 发布功能开发分支"></a>4、在 github 发布功能开发分支</h1><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">git hf <span class="hljs-built_in">push</span><br></code></pre></td></tr></table></figure>
 
-<h1><span id="5-不断更新">5、不断更新</span></h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 你将会经常从别人那拉取已完成的功能开发分支和热修复，再合并到你的分支<br><br># 如果你不在你的功能开发分支上<br>git hf feature checkout #feature-name#<br><br># 拉取主分支和开发分支<br>git hf update<br><br># 合并开发分支到你的分支<br>git merge develop<br></code></pre></td></tr></table></figure>
+<h1 id="5、不断更新"><a href="#5、不断更新" class="headerlink" title="5、不断更新"></a>5、不断更新</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 你将会经常从别人那拉取已完成的功能开发分支和热修复，再合并到你的分支<br><br># 如果你不在你的功能开发分支上<br>git hf feature checkout #feature-name#<br><br># 拉取主分支和开发分支<br>git hf update<br><br># 合并开发分支到你的分支<br>git merge develop<br></code></pre></td></tr></table></figure>
 
-<h1><span id="6-和别人协同开发">6、和别人协同开发</span></h1><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-meta"># 当你需要向你的同事展示你的修改，push你的分支到github</span><br>git hf <span class="hljs-keyword">push</span><br><br><span class="hljs-meta"># 拉取同事的修改到你的仓库</span><br>git hf pull<br></code></pre></td></tr></table></figure>
+<h1 id="6、和别人协同开发"><a href="#6、和别人协同开发" class="headerlink" title="6、和别人协同开发"></a>6、和别人协同开发</h1><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-meta"># 当你需要向你的同事展示你的修改，push你的分支到github</span><br>git hf <span class="hljs-keyword">push</span><br><br><span class="hljs-meta"># 拉取同事的修改到你的仓库</span><br>git hf pull<br></code></pre></td></tr></table></figure>
 
-<h1><span id="7-合并你的分支到-develop-分支">7、合并你的分支到 develop 分支</span></h1><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">git hf <span class="hljs-keyword">push</span><br><span class="hljs-meta"># 之后通过github网站创建一个pull请求给管理员</span><br><span class="hljs-meta"># 接受之后关闭</span><br>git hf feature finish<br></code></pre></td></tr></table></figure>
+<h1 id="7、合并你的分支到-develop-分支"><a href="#7、合并你的分支到-develop-分支" class="headerlink" title="7、合并你的分支到 develop 分支"></a>7、合并你的分支到 develop 分支</h1><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">git hf <span class="hljs-keyword">push</span><br><span class="hljs-meta"># 之后通过github网站创建一个pull请求给管理员</span><br><span class="hljs-meta"># 接受之后关闭</span><br>git hf feature finish<br></code></pre></td></tr></table></figure>
 
-<h1><span id="8-创建测试分支">8、创建测试分支</span></h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 当你有足够多完成的改变，创建测试分支<br>git hf update<br>git hf release start #版本号#<br># 当你完成创建测试分支，记得更新版本信息<br># 构建代码，部署到测试环境，找bug。修复之后继续构建、部署、debug、fix直到结束<br># 当你准备去给release打tag而且合并到master和develop分支<br>git hf release finish #version-number#<br></code></pre></td></tr></table></figure>
+<h1 id="8、创建测试分支"><a href="#8、创建测试分支" class="headerlink" title="8、创建测试分支"></a>8、创建测试分支</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 当你有足够多完成的改变，创建测试分支<br>git hf update<br>git hf release start #版本号#<br># 当你完成创建测试分支，记得更新版本信息<br># 构建代码，部署到测试环境，找bug。修复之后继续构建、部署、debug、fix直到结束<br># 当你准备去给release打tag而且合并到master和develop分支<br>git hf release finish #version-number#<br></code></pre></td></tr></table></figure>
 
-<h1><span id="9-创建热修复">9、创建热修复</span></h1><p>TODO</p>
+<h1 id="9、创建热修复"><a href="#9、创建热修复" class="headerlink" title="9、创建热修复"></a>9、创建热修复</h1><p>TODO</p>
 
                 
               </div>

@@ -24,7 +24,7 @@
 <meta property="og:description" content="区别于本地事务，事务在分布式情况下很重要">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-13T13:41:40.000Z">
-<meta property="article:modified_time" content="2022-10-10T06:23:19.353Z">
+<meta property="article:modified_time" content="2022-10-10T06:39:46.321Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -275,7 +275,7 @@
                 <p>区别于本地事务，事务在分布式情况下很重要</p>
 <span id="more"></span>
 
-<h1><span id="本地事务">本地事务</span></h1><h2><span id="acid-基本性质">ACID 基本性质</span></h2><table>
+<h1 id="本地事务"><a href="#本地事务" class="headerlink" title="本地事务"></a>本地事务</h1><h2 id="ACID-基本性质"><a href="#ACID-基本性质" class="headerlink" title="ACID 基本性质"></a>ACID 基本性质</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -304,7 +304,7 @@
 <td>一个事务一旦提交，则数据将持久化到本地，除非其他事务对其进行修改</td>
 </tr>
 </tbody></table>
-<h2><span id="隔离级别">隔离级别</span></h2><table>
+<h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -317,7 +317,7 @@
 </thead>
 </table>
 <p>| Y：可以解决<br>N：不能解决 | 一个事务读取到另外一个事务未提交的数据 | 同一个事务中，多次读取到的数据不一致 | 一个事务读取数据时，另外一个事务进行更新，导致第一个事务读取到了没有更新的数据 | | |<br>| READ_UNCOMMITTED | Y | Y | Y | Y | Y |<br>| READ_COMMITTED<br>(Oracle SQL 默认) | N | Y | Y | N | Y |<br>| REPEATABLE_READ<br>(MySQL 默认) | N | N | Y | N | Y |<br>| SERIALIZABLE | N | N | N | Y | Y |</p>
-<h2><span id="传播行为">传播行为</span></h2><h2><span id="springboot-本地事务失效问题">SpringBoot 本地事务失效问题</span></h2><blockquote>
+<h2 id="传播行为"><a href="#传播行为" class="headerlink" title="传播行为"></a>传播行为</h2><h2 id="SpringBoot-本地事务失效问题"><a href="#SpringBoot-本地事务失效问题" class="headerlink" title="SpringBoot 本地事务失效问题"></a>SpringBoot 本地事务失效问题</h2><blockquote>
 <p>同一个方法内事务方法互相调用失效</p>
 <p>原因：绕过了代理对象</p>
 </blockquote>
@@ -326,10 +326,10 @@
 </ul>
 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gherkin"><span class="hljs-variable">&lt;dependency&gt;</span><br>    <span class="hljs-variable">&lt;groupId&gt;</span>org.springframework.boot<span class="hljs-variable">&lt;/groupId&gt;</span><br>    <span class="hljs-variable">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="hljs-variable">&lt;/artifactId&gt;</span><br><span class="hljs-variable">&lt;/dependency&gt;</span><br><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br>//开启aspectj动态代理，即使没有接口也能代理，所有代理都由aspectj代理<br></code></pre></td></tr></table></figure>
 
-<h2><span id="本地事务在分布式下的问题">本地事务在分布式下的问题</span></h2><blockquote>
+<h2 id="本地事务在分布式下的问题"><a href="#本地事务在分布式下的问题" class="headerlink" title="本地事务在分布式下的问题"></a>本地事务在分布式下的问题</h2><blockquote>
 <p>例子：在购物订单一块时，需要查询优惠券、库存、积分等多个信息，这几个信息一般由不同微服务负责。下单时各个微服务进行数据库操作，只能保证自己的事务，不能保证其他服务的回滚</p>
 </blockquote>
-<h1><span id="分布式事务">分布式事务</span></h1><h2><span id="cap-定理与-base-理论">CAP 定理与 BASE 理论</span></h2><h3><span id="cap-定理">CAP 定理</span></h3><blockquote>
+<h1 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h1><h2 id="CAP-定理与-BASE-理论"><a href="#CAP-定理与-BASE-理论" class="headerlink" title="CAP 定理与 BASE 理论"></a>CAP 定理与 BASE 理论</h2><h3 id="CAP-定理"><a href="#CAP-定理" class="headerlink" title="CAP 定理"></a>CAP 定理</h3><blockquote>
 <p>CAP 定理是由加州大学伯克利分校 Eric Brewer 教授提出来的，他指出 WEB 服务无法同时满足一下 3 个属性：</p>
 <ul>
 <li>一致性(Consistency) ： 客户端知道一系列的操作都会同时发生(生效)</li>
@@ -340,21 +340,21 @@
 <blockquote>
 <p>在任何数据库设计中，一个 Web 应用至多只能同时支持 CP 或者 AP。显然，任何横向扩展策略都要依赖于数据分区。因此，设计人员必须在一致性与可用性之间做出选择。</p>
 </blockquote>
-<h3><span id="面临的问题">面临的问题</span></h3><h3><span id="base-理论">BASE 理论</span></h3><blockquote>
+<h3 id="面临的问题"><a href="#面临的问题" class="headerlink" title="面临的问题"></a>面临的问题</h3><h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><blockquote>
 <p>BASE：全称：Basically Available(基本可用)，Soft state（软状态）,和 Eventually consistent（最终一致性）三个短语的缩写，来自 ebay 的架构师提出。</p>
 </blockquote>
 <p>Base 理论是对 CAP 中一致性和可用性权衡的结果，其来源于对大型互联网分布式实践的总结，是基于 CAP 定理逐步演化而来的。其核心思想是：</p>
 <blockquote>
 <p>既是无法做到强一致性（Strong consistency），但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性（Eventual consistency）。</p>
 </blockquote>
-<h4><span id="basically-available基本可用">Basically Available(基本可用)</span></h4><p>什么是基本可用呢？假设系统，出现了不可预知的故障，但还是能用，相比较正常的系统而言：</p>
+<h4 id="Basically-Available-基本可用"><a href="#Basically-Available-基本可用" class="headerlink" title="Basically Available(基本可用)"></a>Basically Available(基本可用)</h4><p>什么是基本可用呢？假设系统，出现了不可预知的故障，但还是能用，相比较正常的系统而言：</p>
 <ol>
 <li>响应时间上的损失：正常情况下的搜索引擎 0.5 秒即返回给用户结果，而<strong>基本可用</strong>的搜索引擎可以在 1 秒作用返回结果。</li>
 <li>功能上的损失：在一个电商网站上，正常情况下，用户可以顺利完成每一笔订单，但是到了大促期间，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。</li>
 </ol>
-<h4><span id="soft-state软状态">Soft state（软状态）</span></h4><p>什么是软状态呢？相对于原子性而言，要求多个节点的数据副本都是一致的，这是一种 “硬状态”。</p>
+<h4 id="Soft-state（软状态）"><a href="#Soft-state（软状态）" class="headerlink" title="Soft state（软状态）"></a>Soft state（软状态）</h4><p>什么是软状态呢？相对于原子性而言，要求多个节点的数据副本都是一致的，这是一种 “硬状态”。</p>
 <p>软状态指的是：允许系统中的数据存在中间状态，并认为该状态不影响系统的整体可用性，即允许系统在多个不同节点的数据副本存在数据延时。</p>
-<h4><span id="eventually-consistent最终一致性">Eventually consistent（最终一致性）</span></h4><p>这个比较好理解了哈。</p>
+<h4 id="Eventually-consistent（最终一致性）"><a href="#Eventually-consistent（最终一致性）" class="headerlink" title="Eventually consistent（最终一致性）"></a>Eventually consistent（最终一致性）</h4><p>这个比较好理解了哈。</p>
 <p>上面说软状态，然后不可能一直是软状态，必须有个时间期限。在期限过后，应当保证所有副本保持数据一致性。从而达到数据的最终一致性。这个时间期限取决于网络延时，系统负载，数据复制方案设计等等因素。</p>
 <p>稍微官方一点的说法就是：</p>
 <blockquote>
@@ -372,20 +372,20 @@
 <p><strong>5. 单调写一致性（Monotonic write consistency）</strong></p>
 <p>指一个系统要能够保证来自同一个节点的写操作被顺序的执行。</p>
 <p>然而，在实际的实践中，这 5 种系统往往会结合使用，以构建一个具有最终一致性的分布式系统。实际上，不只是分布式系统使用最终一致性，关系型数据库在某个功能上，也是使用最终一致性的，比如备份，数据库的复制过程是需要时间的，这个复制过程中，业务读取到的值就是旧的。当然，最终还是达成了数据一致性。这也算是一个最终一致性的经典案例。</p>
-<h2><span id="5-总结">5. 总结</span></h2><p>总的来说，BASE 理论面向的是大型高可用可扩展的分布式系统，和传统事务的 ACID 是<strong>相反的</strong>，它完全不同于 ACID 的强一致性模型，而是<strong>通过牺牲强一致性</strong>来获得可用性，并允许数据在一段时间是不一致的。</p>
-<h3><span id="一致性">一致性</span></h3><h4><span id="问题起源">问题起源</span></h4><p>在电商等业务中，系统一般由多个独立的服务组成，如何解决分布式调用时候数据的一致性？</p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>总的来说，BASE 理论面向的是大型高可用可扩展的分布式系统，和传统事务的 ACID 是<strong>相反的</strong>，它完全不同于 ACID 的强一致性模型，而是<strong>通过牺牲强一致性</strong>来获得可用性，并允许数据在一段时间是不一致的。</p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><h4 id="问题起源"><a href="#问题起源" class="headerlink" title="问题起源"></a>问题起源</h4><p>在电商等业务中，系统一般由多个独立的服务组成，如何解决分布式调用时候数据的一致性？</p>
 <p>具体业务场景如下，比如一个业务操作，如果同时调用服务 A、B、C，需要满足要么同时成功；要么同时失败。A、B、C 可能是多个不同部门开发、部署在不同服务器上的远程服务。</p>
 <p>在分布式系统来说，如果不想牺牲一致性，CAP 理论告诉我们只能放弃可用性，这显然不能接受。为了便于讨论问题，先简单介绍下数据一致性的基础理论。</p>
-<h4><span id="强一致">强一致</span></h4><blockquote>
+<h4 id="强一致"><a href="#强一致" class="headerlink" title="强一致"></a>强一致</h4><blockquote>
 <p>当更新操作完成之后，任何多个后续进程或者线程的访问都会返回最新的更新过的值。这种是对用户最友好的，就是用户上一次写什么，下一次就保证能读到什么。根据 CAP 理论，这种实现需要牺牲可用性。</p>
 </blockquote>
-<h4><span id="弱一致性">弱一致性</span></h4><blockquote>
+<h4 id="弱一致性"><a href="#弱一致性" class="headerlink" title="弱一致性"></a>弱一致性</h4><blockquote>
 <p>系统并不保证后续进程或者线程的访问都会返回最新的更新过的值。系统在数据写入成功之后，不承诺立即可以读到最新写入的值，也不会具体的承诺多久之后可以读到。</p>
 </blockquote>
-<h4><span id="最终一致性">最终一致性</span></h4><blockquote>
+<h4 id="最终一致性"><a href="#最终一致性" class="headerlink" title="最终一致性"></a>最终一致性</h4><blockquote>
 <p>弱一致性的特定形式。系统保证在没有后续更新的前提下，系统最终返回上一次更新操作的值。在没有故障发生的前提下，不一致窗口的时间主要受通信延迟，系统负载和复制副本的个数影响。DNS 是一个典型的最终一致性系统。</p>
 </blockquote>
-<h2><span id="分布式事务几种方案">分布式事务几种方案</span></h2><h2><span id="seata">SEATA</span></h2><p>官方文档：<a target="_blank" rel="noopener" href="http://seata.io/zh-cn/docs/overview/what-is-seata.html">http://seata.io/zh-cn/docs/overview/what-is-seata.html</a></p>
+<h2 id="分布式事务几种方案"><a href="#分布式事务几种方案" class="headerlink" title="分布式事务几种方案"></a>分布式事务几种方案</h2><h2 id="SEATA"><a href="#SEATA" class="headerlink" title="SEATA"></a>SEATA</h2><p>官方文档：<a target="_blank" rel="noopener" href="http://seata.io/zh-cn/docs/overview/what-is-seata.html">http://seata.io/zh-cn/docs/overview/what-is-seata.html</a></p>
 
                 
               </div>
