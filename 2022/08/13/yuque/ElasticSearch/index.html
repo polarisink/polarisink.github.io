@@ -16,34 +16,20 @@
   <meta name="author" content="Areis">
   <meta name="keywords" content="">
   
-    <meta name="description" content="categories:  NoSQLtags: ESindex_img: https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1665238076980-47731fc833b2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;500&amp;q">
+    <meta name="description" content="Elasticsearch 是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene 可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ElasticSearch">
 <meta property="og:url" content="https://polarisink.github.io/2022/08/13/yuque/ElasticSearch/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="categories:  NoSQLtags: ESindex_img: https:&#x2F;&#x2F;images.unsplash.com&#x2F;photo-1665238076980-47731fc833b2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;500&amp;q">
+<meta property="og:description" content="Elasticsearch 是一个基于Apache Lucene(TM)的开源搜索引擎。无论在开源还是专有领域，Lucene 可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3456308656.png#crop=0&crop=0&crop=1&crop=1&id=Bemg3&originHeight=216&originWidth=998&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/1284270683.png#crop=0&crop=0&crop=1&crop=1&id=PcZXh&originHeight=1596&originWidth=1766&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/2911909710.png#crop=0&crop=0&crop=1&crop=1&id=PeyC7&originHeight=596&originWidth=818&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3825608175.png#crop=0&crop=0&crop=1&crop=1&id=mYa4l&originHeight=1580&originWidth=2208&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3796241746.png#crop=0&crop=0&crop=1&crop=1&id=EEaYZ&originHeight=1610&originWidth=2190&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/2038942882.png#crop=0&crop=0&crop=1&crop=1&id=McuS1&originHeight=290&originWidth=2206&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3693821220.png#crop=0&crop=0&crop=1&crop=1&id=PUrFI&originHeight=430&originWidth=1532&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/2254326287.png#crop=0&crop=0&crop=1&crop=1&id=zBw92&originHeight=434&originWidth=1472&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/4076872970.png#crop=0&crop=0&crop=1&crop=1&id=jUYSn&originHeight=1148&originWidth=1450&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/4219699525.png#crop=0&crop=0&crop=1&crop=1&id=ChZ0B&originHeight=1500&originWidth=1632&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/1583388408.png#crop=0&crop=0&crop=1&crop=1&id=NRQ7W&originHeight=400&originWidth=918&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/1930608771.png#crop=0&crop=0&crop=1&crop=1&id=Ohmny&originHeight=408&originWidth=1592&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3218523825.png#crop=0&crop=0&crop=1&crop=1&id=h8afW&originHeight=1186&originWidth=1260&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/875363700.png#crop=0&crop=0&crop=1&crop=1&id=OdYWX&originHeight=356&originWidth=1264&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/651833810.png#crop=0&crop=0&crop=1&crop=1&id=U9Oma&originHeight=1416&originWidth=1284&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
-<meta property="og:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/2143721222.png#crop=0&crop=0&crop=1&crop=1&id=aHvuo&originHeight=1190&originWidth=1490&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
+<meta property="og:image" content="https://images.unsplash.com/photo-1665238076980-47731fc833b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
 <meta property="article:published_time" content="2022-08-13T13:41:15.000Z">
-<meta property="article:modified_time" content="2022-10-10T06:56:42.688Z">
+<meta property="article:modified_time" content="2022-10-10T07:11:46.601Z">
 <meta property="article:author" content="Areis">
+<meta property="article:tag" content="ES">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/polaris_ink/usr/uploads/2020/12/3456308656.png#crop=0&crop=0&crop=1&crop=1&id=Bemg3&originHeight=216&originWidth=998&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1665238076980-47731fc833b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
   
   
   
@@ -246,7 +232,7 @@
         
         
         
-          193 分钟
+          192 分钟
         
       </span>
     
@@ -289,10 +275,7 @@
             
               <div class="markdown-body">
                 
-                <hr>
-<p>categories:  NoSQL<br>tags: ES<br>index_img: <a target="_blank" rel="noopener" href="https://images.unsplash.com/photo-1665238076980-47731fc833b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">https://images.unsplash.com/photo-1665238076980-47731fc833b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60</a></p>
-<hr>
-<p>Elasticsearch 是一个基于<a target="_blank" rel="noopener" href="https://lucene.apache.org/core/">Apache Lucene(TM)</a>的开源搜索引擎。无论在开源还是专有领域，Lucene 可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。</p>
+                <p>Elasticsearch 是一个基于<a target="_blank" rel="noopener" href="https://lucene.apache.org/core/">Apache Lucene(TM)</a>的开源搜索引擎。无论在开源还是专有领域，Lucene 可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。</p>
 <span id="more"></span>
 
 <h1 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h1><h2 id="1、Index-索引"><a href="#1、Index-索引" class="headerlink" title="1、Index(索引)"></a>1、Index(索引)</h2><blockquote>
@@ -619,6 +602,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/NoSQL/" class="category-chain-item">NoSQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ES/">#ES</a>
+      
+    </div>
   
 </div>
 
