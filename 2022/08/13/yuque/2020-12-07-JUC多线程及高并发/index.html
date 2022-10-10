@@ -24,7 +24,7 @@
 <meta property="og:description" content="一、Volatile1、volatile 是 Java 虚拟机提供的轻量级的同步机制1、保证可见性2、不保证原子性3、禁止指令重排2、JMM 你谈谈 Java Memory Model，是一种抽象概念，并不真实存在，描述的是一组规则或规范，通过这组规范定义了程序中各个变量的访问方式  1、JMM 关于同步的规定 线程解锁前，必须吧共享变量的值刷新回主存 线程加锁钱，必须读取主存的最新值到自己的工作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-13T13:39:20.000Z">
-<meta property="article:modified_time" content="2022-10-10T02:40:31.975Z">
+<meta property="article:modified_time" content="2022-10-10T02:47:10.708Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -272,23 +272,23 @@
             
               <div class="markdown-body">
                 
-                <h1 id="一、Volatile"><a href="#一、Volatile" class="headerlink" title="一、Volatile"></a>一、Volatile</h1><h2 id="1、volatile-是-Java-虚拟机提供的轻量级的同步机制"><a href="#1、volatile-是-Java-虚拟机提供的轻量级的同步机制" class="headerlink" title="1、volatile 是 Java 虚拟机提供的轻量级的同步机制"></a>1、volatile 是 Java 虚拟机提供的轻量级的同步机制</h2><h3 id="1、保证可见性"><a href="#1、保证可见性" class="headerlink" title="1、保证可见性"></a>1、保证可见性</h3><h3 id="2、不保证原子性"><a href="#2、不保证原子性" class="headerlink" title="2、不保证原子性"></a>2、不保证原子性</h3><h3 id="3、禁止指令重排"><a href="#3、禁止指令重排" class="headerlink" title="3、禁止指令重排"></a>3、禁止指令重排</h3><h2 id="2、JMM-你谈谈"><a href="#2、JMM-你谈谈" class="headerlink" title="2、JMM 你谈谈"></a>2、JMM 你谈谈</h2><blockquote>
+                <h1><span id="一-volatile">一、Volatile</span></h1><h2><span id="1-volatile-是-java-虚拟机提供的轻量级的同步机制">1、volatile 是 Java 虚拟机提供的轻量级的同步机制</span></h2><h3><span id="1-保证可见性">1、保证可见性</span></h3><h3><span id="2-不保证原子性">2、不保证原子性</span></h3><h3><span id="3-禁止指令重排">3、禁止指令重排</span></h3><h2><span id="2-jmm-你谈谈">2、JMM 你谈谈</span></h2><blockquote>
 <p>Java Memory Model，是一种抽象概念，并不真实存在，描述的是一组规则或规范，通过这组规范定义了程序中各个变量的访问方式</p>
 </blockquote>
-<h3 id="1、JMM-关于同步的规定"><a href="#1、JMM-关于同步的规定" class="headerlink" title="1、JMM 关于同步的规定"></a>1、JMM 关于同步的规定</h3><ul>
+<h3><span id="1-jmm-关于同步的规定">1、JMM 关于同步的规定</span></h3><ul>
 <li>线程解锁前，必须吧共享变量的值刷新回主存</li>
 <li>线程加锁钱，必须读取主存的最新值到自己的工作内存</li>
 <li>加锁解锁是同一把锁</li>
 </ul>
-<h2 id="3、你在哪里用到过-volatile"><a href="#3、你在哪里用到过-volatile" class="headerlink" title="3、你在哪里用到过 volatile"></a>3、你在哪里用到过 volatile</h2><h1 id="二、CAS"><a href="#二、CAS" class="headerlink" title="二、CAS"></a>二、CAS</h1><blockquote>
+<h2><span id="3-你在哪里用到过-volatile">3、你在哪里用到过 volatile</span></h2><h1><span id="二-cas">二、CAS</span></h1><blockquote>
 <p>CAS：比较并交换，是一条 CPU 并发原语</p>
 </blockquote>
-<h2 id="1、CAS-原理"><a href="#1、CAS-原理" class="headerlink" title="1、CAS 原理"></a>1、CAS 原理</h2><p>sun.misc.Unsafe 类：CAS 核心类，Java 无法直接访问底层系统，需要通过本地方法(native)访问，Unsafe 相当于一个后门，基于该类可以直接操作特定内存的数据，其内部方法可以象 c 指针一样直接操作内存，原子操作不会被打断</p>
+<h2><span id="1-cas-原理">1、CAS 原理</span></h2><p>sun.misc.Unsafe 类：CAS 核心类，Java 无法直接访问底层系统，需要通过本地方法(native)访问，Unsafe 相当于一个后门，基于该类可以直接操作特定内存的数据，其内部方法可以象 c 指针一样直接操作内存，原子操作不会被打断</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAndIncrement</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-comment">//当前对象，内存地址，1</span><br>  <span class="hljs-keyword">return</span> unsafe.getAndAddInt(<span class="hljs-built_in">this</span>, valueOffset, <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-comment">//var1:atomicInteger对象本身</span><br><span class="hljs-comment">//var2:var1的引用地址</span><br><span class="hljs-comment">//var4:需要改动的变量</span><br><span class="hljs-comment">//var5:用var1 var2找出的主存中真实的值</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAndAddInt</span><span class="hljs-params">(Object var1, <span class="hljs-type">long</span> var2, <span class="hljs-type">int</span> var4)</span> &#123;<br>  <span class="hljs-type">int</span> var5;<br>  <span class="hljs-keyword">do</span> &#123;<br>    var5 = <span class="hljs-built_in">this</span>.getIntVolatile(var1, var2);<br>  &#125; <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">this</span>.compareAndSwapInt(var1, var2, var5, var5 + var4));<br>  <span class="hljs-keyword">return</span> var5;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//表示变量值在内存中的偏移地址</span><br><span class="hljs-keyword">static</span> &#123;<br>  <span class="hljs-keyword">try</span> &#123;<br>    valueOffset = unsafe.objectFieldOffset<br>      (AtomicInteger.class.getDeclaredField(<span class="hljs-string">&quot;value&quot;</span>));<br>  &#125; <span class="hljs-keyword">catch</span> (Exception ex) &#123; <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(ex); &#125;<br>&#125;<br><span class="hljs-comment">//volatile修饰，保证多线程之间内存可见性</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">int</span> value;<br></code></pre></td></tr></table></figure>
 
-<h2 id="2、CAS-缺点"><a href="#2、CAS-缺点" class="headerlink" title="2、CAS 缺点"></a>2、CAS 缺点</h2><ul>
+<h2><span id="2-cas-缺点">2、CAS 缺点</span></h2><ul>
 <li>CAS 失败，会一直进行尝试。如果 CAS 长时间不成功，自旋会给 cpu 带来很大开销</li>
 <li>只能保证一个共享变量的原子操作，对多个共享变量需要用锁</li>
 <li>ABA 问题<ul>

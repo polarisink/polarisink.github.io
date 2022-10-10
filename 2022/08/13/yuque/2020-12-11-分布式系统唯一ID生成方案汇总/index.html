@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://images.blogjava.net/blogjava_net/dongbule/46046/o_111.PNG#crop=0&crop=0&crop=1&crop=1&id=zWKTi&originHeight=253&originWidth=757&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
 <meta property="article:published_time" content="2022-08-13T13:40:00.000Z">
-<meta property="article:modified_time" content="2022-10-10T02:40:31.975Z">
+<meta property="article:modified_time" content="2022-10-10T02:47:10.708Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://images.blogjava.net/blogjava_net/dongbule/46046/o_111.PNG#crop=0&crop=0&crop=1&crop=1&id=zWKTi&originHeight=253&originWidth=757&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&status=done&style=none&title=">
@@ -275,7 +275,7 @@
               <div class="markdown-body">
                 
                 <p>系统唯一 ID 是我们在设计一个系统的时候常常会遇见的问题，也常常为这个问题而纠结。生成 ID 的方法有很多，适应不同的场景、需求以及性能要求。所以有些比较复杂的系统会有多个 ID 生成的策略。下面就介绍一些常见的 ID 生成策略。转载自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/haoxinyue/p/5208136.html">nick’s blog</a></p>
-<h1 id="1-数据库自增长序列或字段"><a href="#1-数据库自增长序列或字段" class="headerlink" title="1. 数据库自增长序列或字段"></a>1. 数据库自增长序列或字段</h1><blockquote>
+<h1><span id="1-数据库自增长序列或字段">1. 数据库自增长序列或字段</span></h1><blockquote>
 <p>最常见的方式。利用数据库，全数据库唯一。</p>
 </blockquote>
 <ol>
@@ -301,7 +301,7 @@
 <ul>
 <li>针对主库单点，如果有多个 Master 库，则每个 Master 库设置的起始数字不一样，步长一样，可以是 Master 的个数。比如：Master1 生成的是 1，4，7，10，Master2 生成的是 2,5,8,11 Master3 生成的是 3,6,9,12。这样就可以有效生成集群中的唯一 ID，也可以大大降低 ID 生成数据库操作的负载。</li>
 </ul>
-<h1 id="2-UUID"><a href="#2-UUID" class="headerlink" title="2. UUID"></a>2. UUID</h1><blockquote>
+<h1><span id="2-uuid">2. UUID</span></h1><blockquote>
 <p>常见的方式。可以利用数据库也可以利用程序生成，一般来说全球唯一。</p>
 </blockquote>
 <ol>
@@ -322,7 +322,7 @@
 <li>传输数据量大</li>
 <li>不可读。</li>
 </ul>
-<h1 id="3-UUID-的变种"><a href="#3-UUID-的变种" class="headerlink" title="3. UUID 的变种"></a>3. UUID 的变种</h1><ol>
+<h1><span id="3-uuid-的变种">3. UUID 的变种</span></h1><ol>
 <li>为了解决 UUID 不可读，可以使用 UUID to Int64 的方法。及</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/// &lt;summary&gt;</span><br><span class="hljs-comment">/// 根据GUID获取唯一数字序列</span><br><span class="hljs-comment">/// &lt;/summary&gt;</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">long</span> <span class="hljs-title function_">GuidToInt64</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">byte</span>[] bytes = Guid.NewGuid().ToByteArray();<br>    <span class="hljs-keyword">return</span> BitConverter.ToInt64(bytes, <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
