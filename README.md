@@ -1,2 +1,0 @@
-# polarisink.github.io
-Blog
