@@ -18,21 +18,21 @@
   
     <meta name="description" content="工作后一段时间后，慢慢发现读写分离的思想出现过很多。比如在 MySQL 集群中的读写分离，MySQL 引擎 InnoDB 中的 MVCC，以及 JDK 中的 CopyOnWriteArrayList 中都有体现。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见读写分离思想的思考">
-<meta property="og:url" content="https://polarisink.github.io/2022/10/11/yuque/%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E6%80%9D%E6%83%B3%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+<meta property="og:title" content="对读写分离思想的思考">
+<meta property="og:url" content="https://polarisink.github.io/2022/10/11/yuque/%E5%AF%B9%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E6%80%9D%E6%83%B3%E7%9A%84%E6%80%9D%E8%80%83/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="工作后一段时间后，慢慢发现读写分离的思想出现过很多。比如在 MySQL 集群中的读写分离，MySQL 引擎 InnoDB 中的 MVCC，以及 JDK 中的 CopyOnWriteArrayList 中都有体现。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://images.unsplash.com/photo-1665141530020-6df603c446c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
 <meta property="article:published_time" content="2022-10-11T07:15:03.000Z">
-<meta property="article:modified_time" content="2022-10-11T08:28:55.489Z">
+<meta property="article:modified_time" content="2022-10-11T09:07:39.590Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1665141530020-6df603c446c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
   
   
   
-  <title>常见读写分离思想的思考 - Hexo</title>
+  <title>对读写分离思想的思考 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="常见读写分离思想的思考"></span>
+            <span id="subtitle" data-typed-text="对读写分离思想的思考"></span>
           
         </div>
 
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          144 字
+          588 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          2 分钟
+          5 分钟
         
       </span>
     
@@ -269,7 +269,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">常见读写分离思想的思考</h1>
+            <h1 style="display: none">对读写分离思想的思考</h1>
             
             
               <div class="markdown-body">
@@ -277,7 +277,27 @@
                 <p>工作后一段时间后，慢慢发现读写分离的思想出现过很多。比如在 MySQL 集群中的读写分离，MySQL 引擎 InnoDB 中的 MVCC，以及 JDK 中的 CopyOnWriteArrayList 中都有体现。</p>
 <span id="more"></span>
 
-<h1 id="一、MySQL-集群读写分离"><a href="#一、MySQL-集群读写分离" class="headerlink" title="一、MySQL 集群读写分离"></a>一、MySQL 集群读写分离</h1><h1 id="二、InnoDB-的-MVCC"><a href="#二、InnoDB-的-MVCC" class="headerlink" title="二、InnoDB 的 MVCC"></a>二、InnoDB 的 MVCC</h1><h1 id="三、CopyOnWriteArrayList"><a href="#三、CopyOnWriteArrayList" class="headerlink" title="三、CopyOnWriteArrayList"></a>三、CopyOnWriteArrayList</h1>
+<h1 id="一、MySQL-集群读写分离"><a href="#一、MySQL-集群读写分离" class="headerlink" title="一、MySQL 集群读写分离"></a>一、MySQL 集群读写分离</h1><blockquote>
+<p>大多数互联网业务中，往往读多写少,这时候数据库的读会首先成为数据库的瓶颈。如果我们已经优化了 SQL，但是读依旧还是瓶颈时，这时就可以选择“读写分离”架构了。</p>
+</blockquote>
+<h2 id="1、具体实施"><a href="#1、具体实施" class="headerlink" title="1、具体实施"></a>1、具体实施</h2><ul>
+<li>集群分为主从库，主库用来写，可以不加索引，提高写效率，丛库追加索引，提高读效率</li>
+</ul>
+<h2 id="2、带来的问题"><a href="#2、带来的问题" class="headerlink" title="2、带来的问题"></a>2、带来的问题</h2><blockquote>
+<p>主从架构会剧透延迟性，会带来一致性问题，对实时性要求搞的业务会产生影响</p>
+</blockquote>
+<ul>
+<li><strong>写后立刻读</strong>: 在写入数据库之后某个时间内读操作去主库，其他时间去丛库</li>
+<li><strong>二次查询</strong>：先去丛库读，读不到就去主库读，注意别给主库带来太大写压力</li>
+<li><strong>特殊处理</strong>：实时性要求搞的业务读写放在主库，次要业务使用读写分离</li>
+</ul>
+<h1 id="二、InnoDB-的-MVCC"><a href="#二、InnoDB-的-MVCC" class="headerlink" title="二、InnoDB 的 MVCC"></a>二、InnoDB 的 MVCC</h1><blockquote>
+<p>数据库通常使用锁实现隔离性。最近的锁，锁住资源之后禁止其他资源访问，不论是读还是写都会被排斥，但是在读多写少的情况下，对读进行锁互斥就显得没有必要。于是引入了读写锁，主要对读进行加锁。后来发现并发量还是不够，最终出现了 MVCC(Multi-Version Concurrency Control)即 多版本并发控制</p>
+</blockquote>
+<ul>
+<li>MVCC 是 MySQL 引擎 InnoDB 对并发处理的无锁实现<img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1665479178164-4e028c72-f127-4f27-bda7-23db93e5e229.png#clientId=u3963bc35-087f-4&crop=0&crop=0&crop=1&crop=1&from=paste&id=uafcae745&margin=%5Bobject%20Object%5D&name=image.png&originHeight=122&originWidth=772&originalType=url%E2%88%B6=1&rotation=0&showTitle=false&size=16749&status=done&style=none&taskId=u4504b232-b7d3-415a-9a7f-943d5802080&title=" srcset="/img/loading.gif" lazyload alt="image.png"></li>
+</ul>
+<h1 id="三、CopyOnWriteArrayList"><a href="#三、CopyOnWriteArrayList" class="headerlink" title="三、CopyOnWriteArrayList"></a>三、CopyOnWriteArrayList</h1>
                 
               </div>
             
@@ -315,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>常见读写分离思想的思考</div>
-      <div>https://polarisink.github.io/2022/10/11/yuque/常见读写分离思想的思考/</div>
+      <div>对读写分离思想的思考</div>
+      <div>https://polarisink.github.io/2022/10/11/yuque/对读写分离思想的思考/</div>
     </div>
     <div class="license-meta">
       
