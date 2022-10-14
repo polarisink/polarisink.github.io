@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>GitBlit项目迁移至GitLab</title>
+    <link href="/2022/10/14/yuque/GitBlit%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E8%87%B3GitLab/"/>
+    <url>/2022/10/14/yuque/GitBlit%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB%E8%87%B3GitLab/</url>
+    
+    <content type="html"><![CDATA[<p>最近公司准备将 git 平台从 GitBlit 迁移至 GitLab，简要记录一下迁移过程</p><span id="more"></span><h1 id="导入原项目所有历史记录"><a href="#导入原项目所有历史记录" class="headerlink" title="导入原项目所有历史记录"></a>导入原项目所有历史记录</h1><blockquote><p>如果只把源码导出再导入，那么所有分支包括分支的所有历史记录都没有了。可以通过以下命令来实现把项目 respository 完全镜像 clone 下来，包括所有分支和记录。</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone --bare git://github.com/username/project.git<br></code></pre></td></tr></table></figure><h1 id="导入到-Gitlab"><a href="#导入到-Gitlab" class="headerlink" title="导入到 Gitlab"></a>导入到 Gitlab</h1><blockquote><p>在 gitlab 上先创建一个新的 repo，再直接 push，最好使用 ssh 协议</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd project.git<br>git push --mirror git@你的gitlab的ip/newproject.git<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Git</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java面试题</title>
     <link href="/2022/10/14/yuque/Java%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <url>/2022/10/14/yuque/Java%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
