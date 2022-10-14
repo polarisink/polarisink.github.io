@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="最近公司准备将 git 平台从 GitBlit 迁移至 GitLab，简要记录一下迁移过程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images.unsplash.com/photo-1650886715457-ab8cf0d1d364?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
+<meta property="og:image" content="https://images.unsplash.com/photo-1650886715457-ab8cf0d1d364?ixlib=rb-1.2.1&ixid=MnwxMjAQ3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
 <meta property="article:published_time" content="2022-10-14T08:09:41.000Z">
-<meta property="article:modified_time" content="2022-10-14T08:18:17.847Z">
+<meta property="article:modified_time" content="2022-10-14T09:09:59.012Z">
 <meta property="article:author" content="Areis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1650886715457-ab8cf0d1d364?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1650886715457-ab8cf0d1d364?ixlib=rb-1.2.1&ixid=MnwxMjAQ3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
   
   
   
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          290 字
+          304 字
         
       </span>
     
@@ -278,12 +278,12 @@
 <span id="more"></span>
 
 <h1 id="导入原项目所有历史记录"><a href="#导入原项目所有历史记录" class="headerlink" title="导入原项目所有历史记录"></a>导入原项目所有历史记录</h1><blockquote>
-<p>如果只把源码导出再导入，那么所有分支包括分支的所有历史记录都没有了。可以通过以下命令来实现把项目 respository 完全镜像 clone 下来，包括所有分支和记录。</p>
+<p>如果只把源码导出再导入，那么所有分支包括分支的所有历史记录都没有了<br>可以通过以下命令来实现把项目 respository 完全镜像 clone 下来，包括所有分支和记录。</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone --bare git://github.com/username/project.git<br></code></pre></td></tr></table></figure>
 
-<h1 id="导入到-Gitlab"><a href="#导入到-Gitlab" class="headerlink" title="导入到 Gitlab"></a>导入到 Gitlab</h1><blockquote>
-<p>在 gitlab 上先创建一个新的 repo，再直接 push，最好使用 ssh 协议</p>
+<h1 id="导入到-GitLab"><a href="#导入到-GitLab" class="headerlink" title="导入到 GitLab"></a>导入到 GitLab</h1><blockquote>
+<p>在 gitlab 上先创建一个新的 repo,<strong>仓库创建者需要 owner 身份</strong>，再直接 push，最好使用 ssh 协议</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd project.git<br>git push --mirror git@你的gitlab的ip/newproject.git<br></code></pre></td></tr></table></figure>
 
