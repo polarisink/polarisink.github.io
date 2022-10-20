@@ -23,12 +23,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="快速搭建语雀 Hexo 博客，Github Actions 快速集成发布">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images.unsplash.com/photo-1655679152831-8bb4f6a00c0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
+<meta property="og:image" content="https://images.unsplash.com/photo-1666132316403-5a37295d19c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MzB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
 <meta property="article:published_time" content="2022-10-19T06:09:19.000Z">
-<meta property="article:modified_time" content="2022-10-20T02:54:07.532Z">
+<meta property="article:modified_time" content="2022-10-20T03:08:25.038Z">
 <meta property="article:author" content="Areis">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1655679152831-8bb4f6a00c0d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1666132316403-5a37295d19c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MzB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
   
   
   
@@ -220,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          3.8k 字
         
       </span>
     
@@ -277,18 +279,22 @@
                 <p>快速搭建语雀 Hexo 博客，Github Actions 快速集成发布</p>
 <span id="more"></span>
 
-<h1 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h1><blockquote>
+<h1 id="一、原理介绍"><a href="#一、原理介绍" class="headerlink" title="一、原理介绍"></a>一、原理介绍</h1><blockquote>
+<p>全流程自动化，一步步的触发</p>
+</blockquote>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FkY_5NtKMeAxRAEquEmvUEsCcUe2.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h1><blockquote>
 <p>主要就是 github 账号以及 token，阿里云 OSS 图床及云函数配置（我使用的阿里云，就只做这个例子，腾讯云的配置差别不是很大）<br>github 账号不名不要太奇怪，尽量不要有一些特殊字符</p>
 </blockquote>
 <h2 id="Github-Token"><a href="#Github-Token" class="headerlink" title="Github Token"></a>Github Token</h2><p>进入<a target="_blank" rel="noopener" href="https://github.com/settings/tokens/new">Github Settings Token</a></p>
 <ul>
 <li>settings&#x2F;developer settings&#x2F;token (class)</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FvTW84YRtK-HAtfz8il8D1LrNCM8.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/Fo4JxcogPUlAyvtLWuTynQyxR3Sf.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>选择 workflow 即可，会包含 repo 权限</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FqXkg3kKV3VZzUFAtocXAL6Kl2uH.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FvjD-5O-it5EvFYTitkDKb2hYuEY.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>生成的 token 记录下来，取名为： ${GITHUB_TOKEN}</li>
 </ul>
@@ -300,30 +306,30 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FqjWhVIppkPrFgdtUcgPw75cCd5f.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FioatQWD8MSaHbRdS-M5mu_gQVdH.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="阿里云-OSS"><a href="#阿里云-OSS" class="headerlink" title="阿里云 OSS"></a>阿里云 OSS</h2><ul>
 <li>进入<a target="_blank" rel="noopener" href="https://oss.console.aliyun.com/bucket">阿里云 OSS 控制台</a>，创建博客需要的 bucket</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FrDLaDq4SJ7weJYB-Pw5u7IOoSy5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FqinAKrhzX_8oWEDjOMpukqE5Yjd.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>进入<a target="_blank" rel="noopener" href="https://ram.console.aliyun.com/users">RAM 访问控制</a>，创建子 RAM 账户,一定要记录好</li>
 <li><strong>提前记录好 AccessKey 及 AccessSecret，否则之后取不到 Secret！</strong></li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/Fneq0ceCSuOpilBxqffCkDwcndUt.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FiBzTYnVW3tgEfhgUu16ADycLucB.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>给 RAM 账户添加 OSS 权限(AliyunOSSFullAccess\AliyunOSSReadOnlyAccess)</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FmhlB0Kpcy8-NR22TZAd6vaYEoSc.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FrnC-4MVT_hK8d-0wpGUFdvShZpH.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="阿里云函数计算-FC"><a href="#阿里云函数计算-FC" class="headerlink" title="阿里云函数计算 FC"></a>阿里云函数计算 FC</h2><ul>
 <li>进入<a target="_blank" rel="noopener" href="https://fcnext.console.aliyun.com/overview">函数计算控制台</a></li>
 <li>创建服务</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FsXQ6OGMcL-kdBuVTKJ9nomT-f5T.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FkkTACdkEVTBE1rgJWy6nXj_7nmq.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>创建函数，使用 Python2.7 环境</li>
 <li>函数配置中的请求处理程序为：index.handler(对应 index.py 中的 handler 函数)</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FrvbGJ6Bc2VPNLhfxFXL8YYGHs_0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/Fsgtr6PXj_0jtZNRTz2CPrmDScfA.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>在 index.py 中编辑，修改 url 中的仓库名为自己源码仓库名</li>
 <li>修改 Authorization 中的 token 为之前创建的 github token（空格不能丢）</li>
@@ -336,35 +342,35 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FrSUEqnsEasNo9u8JwTVJjUpjd_P.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FjIrKULgofxkk2o9mM59wNcMtC79.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="语雀仓库名及-Token"><a href="#语雀仓库名及-Token" class="headerlink" title="语雀仓库名及 Token"></a>语雀仓库名及 Token</h2><ul>
 <li>创建一个公开访问的知识库</li>
 <li>拿到自己的用户名和知识库名</li>
 <li><strong>知识库中内容不要为空，可以提前加入测试文档！</strong></li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FhKf615mIIA5zJKq5pnv3vr0_pbe.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FtjmG9EepHAW5W5VSZK4orebzLbb.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>进入<a target="_blank" rel="noopener" href="https://www.yuque.com/settings/tokens">语雀 Token 设置</a>，创建 token，权限设置为全可读，记录为${YUQUE_TOKEN}</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FmkELoE1gM-_ixvRxI1QRnyrBcU6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FrAozhLIF7mpB_LJwkwUqyh0oU1g.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>配置语雀知识库 WebHook<blockquote>
 <p>选择其他渠道<br>输入上一步云函数的 http 触发地址即可</p>
 </blockquote>
 </li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/Fu2VWdn1xBAhTWOhhOEOOZx6lyq9.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FmSlf89bCGeFBgSbXq8ZX3cvg6SV.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="本地-SSH-及-Git-配置"><a href="#本地-SSH-及-Git-配置" class="headerlink" title="本地 SSH 及 Git 配置"></a>本地 SSH 及 Git 配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">配置git用户名和邮箱</span><br>git config --global user.name &quot;yourname&quot;<br>git config --global user.email &quot;your_email@youremail.com&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置ssh</span><br>ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取公钥到剪切板</span><br>cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>将公钥上传到<a target="_blank" rel="noopener" href="https://github.com/settings/keys">Github SSH 设置界面</a></li>
 </ul>
-<h1 id="二、正式配置"><a href="#二、正式配置" class="headerlink" title="二、正式配置"></a>二、正式配置</h1><h2 id="本地初始化源码仓库"><a href="#本地初始化源码仓库" class="headerlink" title="本地初始化源码仓库"></a>本地初始化源码仓库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取我的仓库源码</span><br>git clone git@github.com:polarisink/polarisink.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改polarisink为你的源码仓库名</span><br>mv polarisink $&#123;GITHUB_NAME&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">链接到你的仓库</span><br>cd $&#123;GITHUB_NAME&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除我的git记录</span><br>rm -rf .git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">git初始化</span><br>git init<br><span class="hljs-meta prompt_"># </span><span class="language-bash">链接到你的博客源码仓库</span><br>git remote add origin git@github.com:$&#123;GITHUB_NAME&#125;/$&#123;GITHUB_NAME&#125;.git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取远程代码</span><br>git pull origin master<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">第一次提交</span><br>git add .<br>git commit -m &quot;your first commit message&quot;<br>git push<br></code></pre></td></tr></table></figure>
+<h1 id="三、正式配置"><a href="#三、正式配置" class="headerlink" title="三、正式配置"></a>三、正式配置</h1><h2 id="本地初始化源码仓库"><a href="#本地初始化源码仓库" class="headerlink" title="本地初始化源码仓库"></a>本地初始化源码仓库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取我的仓库源码</span><br>git clone git@github.com:polarisink/polarisink.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改polarisink为你的源码仓库名</span><br>mv polarisink $&#123;GITHUB_NAME&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">链接到你的仓库</span><br>cd $&#123;GITHUB_NAME&#125;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除我的git记录</span><br>rm -rf .git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">git初始化</span><br>git init<br><span class="hljs-meta prompt_"># </span><span class="language-bash">链接到你的博客源码仓库</span><br>git remote add origin git@github.com:$&#123;GITHUB_NAME&#125;/$&#123;GITHUB_NAME&#125;.git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取远程代码</span><br>git pull origin master<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">第一次提交</span><br>git add .<br>git commit -m &quot;your first commit message&quot;<br>git push<br></code></pre></td></tr></table></figure>
 
 <h2 id="Github-Actions-Secret-配置"><a href="#Github-Actions-Secret-配置" class="headerlink" title="Github Actions Secret 配置"></a>Github Actions Secret 配置</h2><ul>
 <li>进入入源码库 Settings&#x2F;Actions 界面界面</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/Fm0kHz2pFVzq3UuOGINATMlJcu5u.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FogKv_fCXQ4K3JnICOFksUaPKxGc.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>添加<strong>SECRET_ID</strong>和<strong>SECRET_KEY</strong>,内容为阿里云 OSS RAM 子账户配置的 ID 和 KEY</li>
 <li>添加<strong>SSH_PRIVATE_KEY</strong>,内容为本地 SSH 私钥~&#x2F;.ssh&#x2F;id_rsa</li>
@@ -389,7 +395,7 @@
 <h2 id="测试使用"><a href="#测试使用" class="headerlink" title="测试使用"></a>测试使用</h2><ul>
 <li>在语雀中新建一篇文章并保存，勾选文档有较大更新</li>
 </ul>
-<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FjZX_1jR5PgOqIOeqLBl4PlNGBcH.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="http://lqsgoodboy.oss-cn-shanghai.aliyuncs.com/yuque_hexo/FlGgduRt-Fv7D9OLbE4wtIa2exFr.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -408,7 +414,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E9%9D%A2%E8%AF%95/" class="category-chain-item">面试</a>
+  <a href="/categories/Blog/" class="category-chain-item">Blog</a>
   
   
 
@@ -419,6 +425,15 @@
 
     </div>
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Blog/">#Blog</a>
+      
+        <a href="/tags/Git/">#Git</a>
+      
+    </div>
   
 </div>
 
