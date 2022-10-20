@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://images.unsplash.com/photo-1666132316403-5a37295d19c2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MzB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
 <meta property="article:published_time" content="2022-10-19T06:09:19.000Z">
-<meta property="article:modified_time" content="2022-10-20T07:58:04.510Z">
+<meta property="article:modified_time" content="2022-10-20T08:02:28.570Z">
 <meta property="article:author" content="Areis">
 <meta property="article:tag" content="Blog">
 <meta property="article:tag" content="Git">
@@ -282,7 +282,7 @@
 <h1 id="一、原理介绍"><a href="#一、原理介绍" class="headerlink" title="一、原理介绍"></a>一、原理介绍</h1><blockquote>
 <p>全流程自动化，一步步的触发</p>
 </blockquote>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666235132031-7ba98b6c-eb02-4b4e-889d-080785f71900.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=333&id=u2dc0af53&margin=%5Bobject%20Object%5D&name=image.png&originHeight=333&originWidth=963&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=22810&status=done&style=none&taskId=u36386757-1998-43d7-a518-27a2a3a742b&title=&width=963" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/Fh42a1kTeavUlCXlcnGQ91qr05G5.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h1><blockquote>
 <p>主要就是 github 账号以及 token，阿里云 OSS 图床及云函数配置（我使用的阿里云，就只做这个例子，腾讯云的配置差别不是很大）<br>github 账号不名不要太奇怪，尽量不要有一些特殊字符</p>
 </blockquote>
@@ -294,7 +294,7 @@
 <ul>
 <li>选择 workflow 即可，会包含 repo 权限</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666171450032-1fe8129f-7adc-468f-87fa-c794b15fd4d2.png#clientId=u3580edd3-580e-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=637&id=ubf6d4e0f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=637&originWidth=833&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=57610&status=done&style=none&taskId=uc647da64-5ee7-42c4-9b9d-de9eece6caa&title=&width=833" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/Fqr1cRO69UzrMQPZ3-yTC_8XS5RB.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>生成的 token 记录下来，取名为： ${GITHUB_TOKEN}</li>
 </ul>
@@ -306,30 +306,30 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666230312453-40e7d1cd-68fd-4be2-b21a-527e1a1eeb62.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=425&id=u98601d90&margin=%5Bobject%20Object%5D&name=image.png&originHeight=425&originWidth=666&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=73703&status=done&style=none&taskId=u7b50a38f-88a0-4d4a-b4e6-b137a84088b&title=&width=666" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FgQxvguLIA8rxLNy0vjhTVgPg0qw.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="阿里云-OSS"><a href="#阿里云-OSS" class="headerlink" title="阿里云 OSS"></a>阿里云 OSS</h2><ul>
 <li>进入<a target="_blank" rel="noopener" href="https://oss.console.aliyun.com/bucket">阿里云 OSS 控制台</a>，创建博客需要的 bucket</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666230698179-c9622c52-6a21-4885-890a-89e6efc4e79d.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=581&id=u76dadb02&margin=%5Bobject%20Object%5D&name=image.png&originHeight=581&originWidth=1166&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=85587&status=done&style=none&taskId=u92104367-4b97-4ec4-aa0f-3864fe825b0&title=&width=1166" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FigqKbr3y0h2n0HNYHyaTZL4tZAU.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>进入<a target="_blank" rel="noopener" href="https://ram.console.aliyun.com/users">RAM 访问控制</a>，创建子 RAM 账户,一定要记录好</li>
 <li><strong>提前记录好 AccessKey 及 AccessSecret，否则之后取不到 Secret！</strong></li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666230851087-01259828-68c6-4cdd-8c33-0aad888e6f2a.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=433&id=u3f93e376&margin=%5Bobject%20Object%5D&name=image.png&originHeight=433&originWidth=1389&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=61295&status=done&style=none&taskId=ub74f754a-99d4-4ef4-b09d-f7f00421718&title=&width=1389" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/Fnzuf4AGk-mTJwVpbIsu7TZJpi9S.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>给 RAM 账户添加 OSS 权限(AliyunOSSFullAccess\AliyunOSSReadOnlyAccess)</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666230899893-2ba30be6-817f-47e2-8461-8108831246a7.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=628&id=ud7464dbb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=628&originWidth=959&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=80622&status=done&style=none&taskId=u0f93fd3a-82e8-40f9-9f97-63ff58d4e13&title=&width=959" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FqDLPbbHOMdbGEHCrWjA3kJt58Vz.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="阿里云函数计算-FC"><a href="#阿里云函数计算-FC" class="headerlink" title="阿里云函数计算 FC"></a>阿里云函数计算 FC</h2><ul>
 <li>进入<a target="_blank" rel="noopener" href="https://fcnext.console.aliyun.com/overview">函数计算控制台</a></li>
 <li>创建服务</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666231311218-b4ec8352-c2b7-43c0-81cc-0bbe08985c49.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=345&id=u0cb1e353&margin=%5Bobject%20Object%5D&name=image.png&originHeight=345&originWidth=1399&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=48230&status=done&style=none&taskId=u4cb6cadd-c04c-46b0-9b17-ae6b573db0f&title=&width=1399" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FmgQsj15eoT98YSMdwEypF2u8pUp.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>创建函数，使用 Python2.7 环境</li>
 <li>函数配置中的请求处理程序为：index.handler(对应 index.py 中的 handler 函数)</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666231674466-5293b7e5-8707-48f9-b62f-3fe10ef6d19c.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=577&id=u6cbab4d6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=577&originWidth=1103&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=52245&status=done&style=none&taskId=uac28f0ce-9b14-493f-a55b-e5f0e027be7&title=&width=1103" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FjPFl4E16dhBbUpBF6Ix7mqcSlIS.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>在 index.py 中编辑，修改 url 中的仓库名为自己源码仓库名</li>
 <li>修改 Authorization 中的 token 为之前创建的 github token（空格不能丢）</li>
@@ -342,24 +342,24 @@
 </blockquote>
 </li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666234020580-e77c3f7b-6a1c-4a99-beb3-4429579536d4.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=493&id=u1bf06a39&margin=%5Bobject%20Object%5D&name=image.png&originHeight=493&originWidth=1271&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=58558&status=done&style=none&taskId=u8c504007-52d0-49c1-ae04-48ff8b1e2b9&title=&width=1271" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FhTYdNrULX_6IX_R0FISlVKJB71p.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="语雀仓库名及-Token"><a href="#语雀仓库名及-Token" class="headerlink" title="语雀仓库名及 Token"></a>语雀仓库名及 Token</h2><ul>
 <li>创建一个公开访问的知识库</li>
 <li>拿到自己的用户名和知识库名</li>
 <li><strong>知识库中内容不要为空，可以提前加入测试文档！</strong></li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666231932539-2aba7c2d-feb7-4683-b98d-26515b3ddcf9.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=690&id=u5b2324eb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=690&originWidth=848&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=50391&status=done&style=none&taskId=u538bf209-c59b-441d-9a09-f9ceece3ae5&title=&width=848" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FmKSUWOYBo0PnpxE1qPpMgYxP2iX.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>进入<a target="_blank" rel="noopener" href="https://www.yuque.com/settings/tokens">语雀 Token 设置</a>，创建 token，权限设置为全可读，记录为${YUQUE_TOKEN}</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666232026172-de55ab56-f627-4078-bc58-b57ff7167cfa.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=469&id=ue791b2c5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=469&originWidth=821&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=28456&status=done&style=none&taskId=u8f1dbb58-ecdb-4482-87a2-84127a0d435&title=&width=821" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/Fn8y3HbjtPlDRtzUjFjODKFaQ7la.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>配置语雀知识库 WebHook<blockquote>
 <p>选择其他渠道<br>输入上一步云函数的 http 触发地址即可</p>
 </blockquote>
 </li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666234208065-d8ed268a-3b2b-41a0-bd90-ec2d7e4d28b0.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=650&id=ufce55bef&margin=%5Bobject%20Object%5D&name=image.png&originHeight=650&originWidth=962&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=33090&status=done&style=none&taskId=u579c4c3b-126c-42a0-81f8-091942b2be0&title=&width=962" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/Fp_JGC1sPV3e_MM5iNmEMqRslqn1.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="本地-SSH-及-Git-配置"><a href="#本地-SSH-及-Git-配置" class="headerlink" title="本地 SSH 及 Git 配置"></a>本地 SSH 及 Git 配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">配置git用户名和邮箱</span><br>git config --global user.name &quot;yourname&quot;<br>git config --global user.email &quot;your_email@youremail.com&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置ssh</span><br>ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取公钥到剪切板</span><br>cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
 
 <ul>
@@ -373,7 +373,7 @@
 <h2 id="Github-Actions-Secret-配置"><a href="#Github-Actions-Secret-配置" class="headerlink" title="Github Actions Secret 配置"></a>Github Actions Secret 配置</h2><ul>
 <li>进入入源码库 Settings&#x2F;Actions 界面界面</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666233358604-1928014f-1d2f-4d62-bb3e-646a49187575.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=993&id=u939cd56f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=993&originWidth=1210&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=110466&status=done&style=none&taskId=u9e47654a-c723-49ff-b871-9d31cf8475f&title=&width=1210" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FrDvpH5k2c5WPS2O5A79EvbjW8Wl.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>添加<strong>SECRET_ID</strong>和<strong>SECRET_KEY</strong>,内容为阿里云 OSS RAM 子账户配置的 ID 和 KEY</li>
 <li>添加<strong>SSH_PRIVATE_KEY</strong>,内容为本地 SSH 私钥~&#x2F;.ssh&#x2F;id_rsa</li>
@@ -398,7 +398,7 @@
 <h2 id="测试使用"><a href="#测试使用" class="headerlink" title="测试使用"></a>测试使用</h2><ul>
 <li>在语雀中新建一篇文章并保存，勾选文档有较大更新</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/8402083/1666234322173-516468c1-cbda-4597-9116-44ed095cfe42.png#clientId=u67d6394c-ead2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=195&id=u82b06909&margin=%5Bobject%20Object%5D&name=image.png&originHeight=195&originWidth=407&originalType=binary%E2%88%B6=1&rotation=0&showTitle=false&size=14047&status=done&style=none&taskId=u913d289b-b269-450f-a2b4-d97f60e9673&title=&width=407" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FuAozCYIB3z2hxa59JhVkDZfYykw.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
