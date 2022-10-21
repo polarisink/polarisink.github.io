@@ -75,25 +75,6 @@
   
   
   <entry>
-    <title>Java面试题</title>
-    <link href="/2022/10/14/yuque/Java%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <url>/2022/10/14/yuque/Java%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    
-    <content type="html"><![CDATA[<p>面试别人的时候使用</p><span id="more"></span><h1 id="一、Java-基础"><a href="#一、Java-基础" class="headerlink" title="一、Java 基础"></a>一、Java 基础</h1><h2 id="IO-流的理解"><a href="#IO-流的理解" class="headerlink" title="IO 流的理解"></a>IO 流的理解</h2><h2 id="三目运算符注意事项-amp-amp-包装类"><a href="#三目运算符注意事项-amp-amp-包装类" class="headerlink" title="三目运算符注意事项 &amp;&amp; 包装类"></a>三目运算符注意事项 &amp;&amp; 包装类</h2><h2 id="String-s-x3D-new-String-“abc”-创建了几个对象"><a href="#String-s-x3D-new-String-“abc”-创建了几个对象" class="headerlink" title="String s &#x3D; new String(“abc”)创建了几个对象"></a>String s &#x3D; new String(“abc”)创建了几个对象</h2><blockquote><p>为什么 String 不可变</p></blockquote><h2 id="接口和内部类的理解"><a href="#接口和内部类的理解" class="headerlink" title="接口和内部类的理解"></a>接口和内部类的理解</h2><h2 id="equals-amp-amp-hashcode"><a href="#equals-amp-amp-hashcode" class="headerlink" title="equals &amp;&amp; hashcode"></a>equals &amp;&amp; hashcode</h2><h2 id="异常体系的理解"><a href="#异常体系的理解" class="headerlink" title="异常体系的理解"></a>异常体系的理解</h2><h2 id="try-x2F-catch-x2F-finally"><a href="#try-x2F-catch-x2F-finally" class="headerlink" title="try&#x2F;catch&#x2F;finally"></a>try&#x2F;catch&#x2F;finally</h2><blockquote><p>字节码角度理解一下<br>finally 为什么不能使用 return<br>finally 一定会被执行吗</p></blockquote><h2 id="泛型及其使用"><a href="#泛型及其使用" class="headerlink" title="泛型及其使用"></a>泛型及其使用</h2><h2 id="反射及使用场景"><a href="#反射及使用场景" class="headerlink" title="反射及使用场景"></a>反射及使用场景</h2><h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><h2 id="Stream-Api-amp-amp-Lambda"><a href="#Stream-Api-amp-amp-Lambda" class="headerlink" title="Stream Api &amp;&amp; Lambda"></a>Stream Api &amp;&amp; Lambda</h2><h1 id="二、集合"><a href="#二、集合" class="headerlink" title="二、集合"></a>二、集合</h1><h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><h2 id="CopyOnWriteArrayList-Set"><a href="#CopyOnWriteArrayList-Set" class="headerlink" title="CopyOnWriteArrayList(Set)"></a>CopyOnWriteArrayList(Set)</h2><h2 id="SkipList"><a href="#SkipList" class="headerlink" title="SkipList"></a>SkipList</h2><h1 id="三、Concurrent"><a href="#三、Concurrent" class="headerlink" title="三、Concurrent"></a>三、Concurrent</h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>面试</category>
-      
-    </categories>
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>对读写分离思想的思考</title>
     <link href="/2022/10/11/yuque/%E5%AF%B9%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E6%80%9D%E6%83%B3%E7%9A%84%E6%80%9D%E8%80%83/"/>
     <url>/2022/10/11/yuque/%E5%AF%B9%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E6%80%9D%E6%83%B3%E7%9A%84%E6%80%9D%E8%80%83/</url>
