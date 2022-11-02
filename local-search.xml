@@ -4,19 +4,6 @@
   
   
   <entry>
-    <title>Excel导入及导出逻辑</title>
-    <link href="/2022/11/02/yuque/Excel%E5%AF%BC%E5%85%A5%E5%8F%8A%E5%AF%BC%E5%87%BA%E9%80%BB%E8%BE%91/"/>
-    <url>/2022/11/02/yuque/Excel%E5%AF%BC%E5%85%A5%E5%8F%8A%E5%AF%BC%E5%87%BA%E9%80%BB%E8%BE%91/</url>
-    
-    <content type="html"><![CDATA[<blockquote><p>在创建机床档案时，会为选框默认选择通过属性，value 为 1</p></blockquote><h1 id="导出逻辑"><a href="#导出逻辑" class="headerlink" title="导出逻辑"></a>导出逻辑</h1><h2 id="导出指定机床的数据"><a href="#导出指定机床的数据" class="headerlink" title="导出指定机床的数据"></a>导出指定机床的数据</h2><p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FvWBzRiy7WTkH5th95hjf0eNNHUC.png"></p><ul><li>对类型为 radio 的，根据 options 和 value 拿出 通过&#x2F;不通过</li></ul><h2 id="导出模板"><a href="#导出模板" class="headerlink" title="导出模板"></a>导出模板</h2><ul><li>excel 最后的值列均为空字符串 “ ”</li></ul><h1 id="导入逻辑"><a href="#导入逻辑" class="headerlink" title="导入逻辑"></a>导入逻辑</h1><p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FlPhDkSCw2w9morcN7EZDiI_etiu.png"></p><h2 id="导入机床数据"><a href="#导入机床数据" class="headerlink" title="导入机床数据"></a>导入机床数据</h2><ul><li>value 如果不为空字符串“ “ 且不包含‘不’，就是通过</li></ul><h2 id="导入模板数据"><a href="#导入模板数据" class="headerlink" title="导入模板数据"></a>导入模板数据</h2><ul><li>value 可能为空，同上，默认为通过</li></ul>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>GitHubActions持续集成语雀Hexo博客</title>
     <link href="/2022/10/19/yuque/GitHubActions%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%AF%AD%E9%9B%80Hexo%E5%8D%9A%E5%AE%A2/"/>
     <url>/2022/10/19/yuque/GitHubActions%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%AF%AD%E9%9B%80Hexo%E5%8D%9A%E5%AE%A2/</url>
