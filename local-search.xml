@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>SafePoint</title>
+    <link href="/2022/11/03/yuque/SafePoint/"/>
+    <url>/2022/11/03/yuque/SafePoint/</url>
+    
+    <content type="html"><![CDATA[<p>今天偶然看到的一个奇技淫巧</p><span id="more"></span><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainTest</span> &#123;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(<span class="hljs-number">0</span>);<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>    <span class="hljs-type">Runnable</span> <span class="hljs-variable">runnable</span> <span class="hljs-operator">=</span> () -&gt; &#123;<br>      <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000000</span>; i++) &#123;<br>        num.getAndAdd(<span class="hljs-number">1</span>);<br>      &#125;<br>      System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;执行结束!&quot;</span>);<br>    &#125;;<br><br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(runnable);<br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(runnable);<br>    t1.start();<br>    t2.start();<br>    Thread.sleep(<span class="hljs-number">1000</span>);<br>    System.out.println(<span class="hljs-string">&quot;num = &quot;</span> + num);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>JavaSE</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>GitHubActions持续集成语雀Hexo博客</title>
     <link href="/2022/10/19/yuque/GitHubActions%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%AF%AD%E9%9B%80Hexo%E5%8D%9A%E5%AE%A2/"/>
     <url>/2022/10/19/yuque/GitHubActions%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E8%AF%AD%E9%9B%80Hexo%E5%8D%9A%E5%AE%A2/</url>
