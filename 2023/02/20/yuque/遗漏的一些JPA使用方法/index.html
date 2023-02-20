@@ -16,24 +16,24 @@
   <meta name="author" content="Areis">
   <meta name="keywords" content="">
   
-    <meta name="description" content="JAVA17 就要正式发布了，趁有时间学习一下。以后就 JAVA8 工作和 JAVA17 学习了。下面讲一下 JAVA9 到 JAVA17 所有的新特性">
+    <meta name="description" content="2023 年了，新的一年，第一篇博客记录。继续进步啊">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java8到Java17">
-<meta property="og:url" content="https://polarisink.github.io/2022/08/13/yuque/Java8%E5%88%B0Java17/index.html">
+<meta property="og:title" content="遗漏的一些JPA使用方法">
+<meta property="og:url" content="https://polarisink.github.io/2023/02/20/yuque/%E9%81%97%E6%BC%8F%E7%9A%84%E4%B8%80%E4%BA%9BJPA%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="JAVA17 就要正式发布了，趁有时间学习一下。以后就 JAVA8 工作和 JAVA17 学习了。下面讲一下 JAVA9 到 JAVA17 所有的新特性">
+<meta property="og:description" content="2023 年了，新的一年，第一篇博客记录。继续进步啊">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images.unsplash.com/photo-1661846601758-28ce69e3d480?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDE1NnxibzhqUUtUYUUwWXx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60">
-<meta property="article:published_time" content="2022-08-13T13:41:55.000Z">
-<meta property="article:modified_time" content="2023-02-20T07:41:12.485Z">
+<meta property="og:image" content="https://images.unsplash.com/photo-1676808206394-bf1b44436cdf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
+<meta property="article:published_time" content="2023-02-20T07:12:36.000Z">
+<meta property="article:modified_time" content="2023-02-20T07:40:45.836Z">
 <meta property="article:author" content="Areis">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JPA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1661846601758-28ce69e3d480?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDE1NnxibzhqUUtUYUUwWXx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1676808206394-bf1b44436cdf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
   
   
   
-  <title>Java8到Java17 - Hexo</title>
+  <title>遗漏的一些JPA使用方法 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Java8到Java17"></span>
+            <span id="subtitle" data-typed-text="遗漏的一些JPA使用方法"></span>
           
         </div>
 
@@ -209,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-13 21:41" pubdate>
-          2022年8月13日 晚上
+        <time datetime="2023-02-20 15:12" pubdate>
+          2023年2月20日 下午
         </time>
       </span>
     
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          917 字
+          3.6k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          8 分钟
+          30 分钟
         
       </span>
     
@@ -270,22 +270,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java8到Java17</h1>
+            <h1 style="display: none">遗漏的一些JPA使用方法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>JAVA17 就要正式发布了，趁有时间学习一下。以后就 JAVA8 工作和 JAVA17 学习了。下面讲一下 JAVA9 到 JAVA17 所有的新特性</p>
+                <p>2023 年了，新的一年，第一篇博客记录。继续进步啊</p>
 <span id="more"></span>
 
 <blockquote>
-<p>还没有发正式版，先手动安装 GA 版。我的电脑是<code>Manjaro</code>系统,使用 archlinux-java 进行版本管理</p>
+<p>最近的业务需要一些关键字查询，就查了一些资料，学会了 JPA 一些之前不会的方法。</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/Downloads<br>wget https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz<br>sudo tar -zxvf openjdk-17_linux-x64_bin.tar.gz -C /usr/lib/jvm<br>cd /usr/liv/jvm<br>sudo mv jdk-17 java-17-openjdk<br></code></pre></td></tr></table></figure>
+<h1 id="一、关键字查询"><a href="#一、关键字查询" class="headerlink" title="一、关键字查询"></a>一、关键字查询</h1><blockquote>
+<p>页面上搜索框需要对多个字段进行关键字模糊查询。其实搜索最好使用 ES。但我司业务比较轻，就没有使用 ES</p>
+</blockquote>
+<ul>
+<li>在这里需要对工单号，参会专家，参会人员，客户单位，保修厂家，会议主题进行关键字搜索，是 or 搜索，还有其他的条件搜索，组合起来为一个多条件分页搜素</li>
+<li>使用两个断言数组，一个存储 and 查询，一个存储关键字 or 查询即可。最后根据条件进行拼装。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-keyword">public</span> PageUtil&lt;Appointment&gt; <span class="hljs-title function_">list</span><span class="hljs-params">(AppointPageReq req)</span> &#123;<br>    <span class="hljs-type">Sort</span> <span class="hljs-variable">sort</span> <span class="hljs-operator">=</span> Sort.by(Sort.Direction.DESC, <span class="hljs-string">&quot;startTime&quot;</span>, <span class="hljs-string">&quot;updateTime&quot;</span>);<br>    <span class="hljs-type">Pageable</span> <span class="hljs-variable">pageable</span> <span class="hljs-operator">=</span> PageUtil.getPageRequest(req, sort);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">keyword</span> <span class="hljs-operator">=</span> req.getKeyword();<br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">start</span> <span class="hljs-operator">=</span> req.getStart();<br>    <span class="hljs-type">LocalDate</span> <span class="hljs-variable">end</span> <span class="hljs-operator">=</span> req.getEnd();<br>    <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>    Specification&lt;Appointment&gt; specification = (root, query, builder) -&gt; &#123;<br>      List&lt;Predicate&gt; andPre = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>      List&lt;Predicate&gt; orPre = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>      <span class="hljs-comment">//关键字查询：工单号、参会专家、参会人员、客户单位、报修厂家、会议主题</span><br>      <span class="hljs-type">boolean</span> <span class="hljs-variable">hasOr</span> <span class="hljs-operator">=</span> StrUtil.isNotBlank(StrUtil.trim(keyword));<br>      <span class="hljs-keyword">if</span> (hasOr) &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">blurStr</span> <span class="hljs-operator">=</span> SqlUtil.getBlurStr(keyword);<br>        orPre.add(builder.like(root.get(<span class="hljs-string">&quot;workOrderNum&quot;</span>), blurStr));<br>        orPre.add(builder.like(root.get(<span class="hljs-string">&quot;customerUnit&quot;</span>), blurStr));<br>        orPre.add(builder.like(root.get(<span class="hljs-string">&quot;repairFactory&quot;</span>), blurStr));<br>        orPre.add(builder.like(root.get(<span class="hljs-string">&quot;theme&quot;</span>), blurStr));<br>        <span class="hljs-comment">//查出其他参会人员和会议的关联id列表</span><br>        List&lt;Long&gt; idListByNameLike = appointParticipantRepo.findIdListByNameLike(blurStr);<br>        <span class="hljs-keyword">if</span> (CollUtil.isNotEmpty(idListByNameLike)) &#123;<br>          orPre.add(root.get(<span class="hljs-string">&quot;id&quot;</span>).in(idListByNameLike));<br>        &#125;<br>        <span class="hljs-comment">//查出参会专家的关联id列表</span><br>        List&lt;Long&gt; idListByExpertNameLike = expertRepo.findIdListByNameLike(blurStr);<br>        <span class="hljs-keyword">if</span> (CollUtil.isNotEmpty(idListByExpertNameLike)) &#123;<br>          orPre.add(root.get(<span class="hljs-string">&quot;id&quot;</span>).in(idListByExpertNameLike));<br>        &#125;<br>      &#125;<br>      <span class="hljs-keyword">if</span> (Objects.nonNull(start)) &#123;<br>        <span class="hljs-keyword">if</span> (Objects.isNull(end)) &#123;<span class="hljs-comment">//为空就查今天及以后的</span><br>          andPre.add(builder.greaterThan(root.get(<span class="hljs-string">&quot;startTime&quot;</span>), start.atTime(LocalTime.MIN)));<br>        &#125; <span class="hljs-keyword">else</span> &#123;<span class="hljs-comment">//否则查</span><br>          andPre.add(builder.between(root.get(<span class="hljs-string">&quot;startTime&quot;</span>), start.atTime(LocalTime.MIN), end.atTime(LocalTime.MAX)));<br>        &#125;<br>      &#125;<br>      Predicate[] a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Predicate</span>[andPre.size()];<br>      Predicate[] o = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Predicate</span>[orPre.size()];<br>      <span class="hljs-comment">// 如果有关键字查询，就有or查询，否则全部是and查询</span><br>      <span class="hljs-keyword">if</span> (hasOr) &#123;<br>        <span class="hljs-keyword">return</span> query.where(builder.and(andPre.toArray(a)), builder.or(orPre.toArray(o))).getRestriction();<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> builder.and(andPre.toArray(a));<br>      &#125;<br>    &#125;;<br>	<span class="hljs-comment">//return ..........其他业务</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>archlinux-java 进行版本管理成功</p>
-<p><img src="https://cdn.jsdelivr.net/gh/polarisink/images/blog/FqFTaZAOpkFQES0cNSs8PSYYuRXX.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="JAVA9"><a href="#JAVA9" class="headerlink" title="JAVA9"></a>JAVA9</h1><h2 id="内置集合工厂"><a href="#内置集合工厂" class="headerlink" title="内置集合工厂"></a>内置集合工厂</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//集合工厂,immutable,Guava有类似功能</span><br><span class="hljs-comment">//声明的时候set不能重复，map的key也不能重复</span><br>List&lt;Integer&gt; list = List.of(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">10</span>);<br>Set&lt;Integer&gt; set = Set.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>);<br>Map&lt;String, String&gt; map = Map.of(<span class="hljs-string">&quot;k1&quot;</span>, <span class="hljs-string">&quot;v1&quot;</span>, <span class="hljs-string">&quot;k2&quot;</span>, <span class="hljs-string">&quot;v3&quot;</span>, <span class="hljs-string">&quot;k3&quot;</span>, <span class="hljs-string">&quot;v3&quot;</span>);<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">UnsupportedOperationException,不可变的</span><br><span class="hljs-comment">list.remove(3)</span><br><span class="hljs-comment">set.remove(2);</span><br><span class="hljs-comment">map.remove(&quot;k3&quot;);*/</span><br><span class="hljs-comment">//java8 方法引用</span><br>list.forEach(System.out::println);<br>set.forEach(System.out::println);<br>map.forEach((k, v) -&gt; System.out.println(<span class="hljs-string">&quot;k: &quot;</span> + k + <span class="hljs-string">&quot;,v: &quot;</span> + v));<br></code></pre></td></tr></table></figure>
+<h1 id="二、传参及查询结果的接收"><a href="#二、传参及查询结果的接收" class="headerlink" title="二、传参及查询结果的接收"></a>二、传参及查询结果的接收</h1><blockquote>
+<p>以前使用 mybatis 的时会使用@Param 进行参数绑定， 在使用 JPA 的过程中每台注意，后来发现其实也是有类似注解的，这样会使代码更具有可读性，不必每次使用?1 进行参数的指定</p>
+<p>一个实体有可能只需要其中的部分字段，这时开源使用 JPQL 的语法使用对应的 DTO 进行查询结果的接收<br>在 DTO 中定义好有参构造器即可，注意需要使用 DTO 的权限定类名进行接收</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">AppointExpertRefRepo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BaseJpaRepo</span>&lt;AppointExpertRef&gt; &#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 通过专家id查询某个时间段内所有会议的开始时间</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> expertId</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> startTime</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-meta">@Query(value =&quot;select new cn.hzncc.dao.bean.dto.AppointTime(a.startTime,a.endTime,a.theme)</span><br><span class="hljs-meta">         from appointment a left join appointExpertRef ae on ae.appointId = a.id &quot;</span><br><span class="hljs-meta">          + &quot;where ae.expertId = :expertId and a.startTime &gt; :startTime&quot;)</span><br>  List&lt;AppointTime&gt; <span class="hljs-title function_">findAppointByExpertIdAndStartTime</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;expertId&quot;)</span> Long expertId, <span class="hljs-meta">@Param(&quot;startTime&quot;)</span> LocalDateTime startTime)</span>;<br>&#125;<br><br><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppointTime</span> &#123;<br><br>  <span class="hljs-meta">@JsonFormat(pattern = NORM_DATETIME_MINUTE_PATTERN, timezone = TIME_ZONE)</span><br>  <span class="hljs-keyword">private</span> LocalDateTime startTime;<br>  <span class="hljs-meta">@JsonFormat(pattern = NORM_DATETIME_MINUTE_PATTERN, timezone = TIME_ZONE)</span><br>  <span class="hljs-keyword">private</span> LocalDateTime endTime;<br>  <span class="hljs-keyword">private</span> String theme;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总的来说个人还是更喜欢使用 JPA 的，在编写 JPQL 的时候如果又字段不对，IDEA 也会进行对应的标红提示，基本做到了类型安全。<br>在开发中，简单的 sql 使用 jpa 内置方法，声明符合规则的方法即可，较复杂的使用 JPQL 查询也可以解决很多问题。更复杂的可以使用 Specification 构建查询规则，或者使用 jdbcTemplate 完全手写 sql 也很不错<br>希望开发中能早日用上文本块，这样 sql 换行也就更美观了</p>
+</blockquote>
 
                 
               </div>
@@ -319,7 +332,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Java/">#Java</a>
+        <a href="/tags/JPA/">#JPA</a>
       
     </div>
   
@@ -331,8 +344,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java8到Java17</div>
-      <div>https://polarisink.github.io/2022/08/13/yuque/Java8到Java17/</div>
+      <div>遗漏的一些JPA使用方法</div>
+      <div>https://polarisink.github.io/2023/02/20/yuque/遗漏的一些JPA使用方法/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +357,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月13日</div>
+          <div>2023年2月20日</div>
         </div>
       
       
@@ -376,18 +389,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/13/yuque/MySQL%E5%A4%8D%E5%88%B6%E6%95%B0%E6%8D%AE%E5%BA%93/" title="MySQL复制数据库">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MySQL复制数据库</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/13/yuque/GitFlow%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="GitFlow使用教程">
-                        <span class="hidden-mobile">GitFlow使用教程</span>
+                      <a href="/2022/12/08/yuque/%E5%B9%82%E7%AD%89%E6%80%A7%E5%92%8C%E9%98%B2%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/" title="幂等性和防重复提交">
+                        <span class="hidden-mobile">幂等性和防重复提交</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
